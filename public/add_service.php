@@ -24,6 +24,9 @@ $service = new Service($database);
 $errorMessage = "";
 $success = ''; // Inicializace proměnné pro úspěch
 
+// pokud proměnná není nastavena, nebo je null nastaví se na text/html
+$responseType=$_SERVER['HTTP_ACCEPT'] ?? 'text/html';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $serviceName = $_POST['service_name'] ?? '';
     $serviceUserName = $_POST['service_user_name'] ?? '';
@@ -33,11 +36,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($serviceName) || empty($serviceUserName) || empty($servicePassword)) {
         $errorMessage = "All rows are mandatory!";
     } else {
+
         // Přidání služby
         if ($service->addService($userId, $serviceName, $serviceUserName, $servicePassword)) {
            $success="Password successfully added!";
         } else {
             $errorMessage = "Failed to add the password.";
+        }
+
+        // Pokud je požadavek typu application/json, vrátíme JSON odpověd 
+        if ($responseType=='application/json'){
+            header("Content-Type:application/json");
+            echo json_encode([
+                'status' => $errorMessage ? 'error':'success',  
+                'message' => $errorMessage ? $errorMessage : $success
+            ]);
+            exit();
         }
     }
 }

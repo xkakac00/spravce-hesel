@@ -9,25 +9,81 @@ $database = new Database();
 $user = new User($database);
 
 $error = ''; // Inicializace proměnné pro chybu
+$successMesasage=''; // Inicializace proměnné pro úspěch
 
-try {
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Načtení dat z POST požadavku
-        $userName = $_POST['user_name'];
-        $password = $_POST['password'];
+$responseType = $_SERVER['HTTP_ACCEPT'] ?? 'text/html';
 
-        // Pokus o přihlášení uživatele
-        if ($user->login($userName, $password)) {
-            header("Location: dashboard.php");
-            exit(); // zde už nepotřebuji, aby se další kod vykonal
-        } else {
-            $error = "Přihlášení se nezdařilo!";
+// Pokud je požadavek typu json
+if ($responseType=="application/json"){
+    $input=json_decode(file_get_contents("php://input"),true);
+    $userName=$input['user_name'] ?? '';
+    $password=$input['password'] ?? '';
+}
+// Pokud je to normální UI formulář
+else{
+    $userName=$_POST['user_name'] ?? '';
+    $password=$_POST['password'] ?? '';
+}
+
+try{
+    if ($_SERVER["REQUEST_METHOD"] == "POST"){
+        // Přihlášení uživatele
+        if ($user->login($userName,$password)){
+            if ($responseType=='application/json'){
+                // Pokud je požadavek json, vracim json odpověd
+                echo json_encode([
+                    'status'=>'success',
+                    'message'=>'Login successful'
+                ]);
+                exit();
+
+            } 
+            // Přesměrování pro normální formulář.
+            else{
+                header("location:dashboard.php");
+                exit();
+            }
+            }else{
+                $error="Login failed!";
+            }
         }
     }
-} catch (Exception $e) {
-    // getMessage() je metoda z třídy Exception
-    $error = "Error: " . $e->getMessage();
+catch(Exception $e){
+    $error = "Error:".$e->getMessage();
 }
+
+if ($responseType == 'application/json' && !empty($error)) {
+    echo json_encode([
+        'status' => 'error',
+        'message' => $error
+    ]);
+    exit();
+}
+
+
+
+
+
+
+
+#try {
+#    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Načtení dat z POST požadavku
+#        $userName = $_POST['user_name'] ?? '';  // ?? vrátí výchozí hodnotu '' pokud levá strana je null nebo není nastavena.
+#        $password = $_POST['password'] ?? '';
+
+#        // Pokus o přihlášení uživatele
+#        if ($user->login($userName, $password)) {
+#            header("Location: dashboard.php");
+#            exit(); // zde už nepotřebuji, aby se další kod vykonal
+#        } else {
+#            $error = "Login failed!";
+#        }
+#    }
+#} catch (Exception $e) {
+    // getMessage() je metoda z třídy Exception
+#    $error = "Error: " . $e->getMessage();
+#}
 ?>
 
 <!DOCTYPE html>

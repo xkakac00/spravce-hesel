@@ -1,10 +1,10 @@
 from BaseTest import BaseTest
 from selenium.webdriver.common.by import By
 
-class TS13(BaseTest):
-    def test_edit_passwords(self):
+class TS15(BaseTest):
+    def test_edit_passwords_without_servicename(self):
         print("=============================================")
-        print("Začíná test T13: Editace hesla")
+        print("Začíná test T15: Editace hesla – Service Name není vyplněno..")
         print("=============================================")
         self.openurl("http://localhost/spravce/public/login.php")
         self.fill_text("user_name","DonS")
@@ -15,16 +15,10 @@ class TS13(BaseTest):
         self.check_url("http://localhost/spravce/public/view_services.php")
         self.edit("edit")
         self.check_url_contains("edit_service.php")
-        self.fill_text("service_name","spartapraha")
-        self.fill_text("service_user_name","DonSalieri")
-        self.fill_text("service_user_password","mistrligy")
-        self.click_button("input[type='submit']", "none")
-        self.check_url("http://localhost/spravce/public/view_services.php")
-        self.verify_changes("spartapraha","DonSalieri","mistrligy")
-        
- 
-
-
+        self.clear_text("service_name")
+        self.fill_text("service_user_name","TestUser")
+        self.fill_text("service_user_password","TestPassword")
+        self.click_button("input[type='submit']", "error")
         
         
 if __name__ == "__main__":

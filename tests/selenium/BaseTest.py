@@ -26,6 +26,7 @@ class BaseTest(unittest.TestCase):
     def fill_text(self, identifikator, text):
         try:
             element = self.driver.find_element(By.NAME, identifikator)
+            element.clear()
             element.send_keys(text)
             time.sleep(1)  # Přidání prodlevy, pro zajištění, že hodnota byla zadaná.
             value = element.get_attribute('value')
@@ -70,6 +71,11 @@ class BaseTest(unittest.TestCase):
         else:
             print(f"Current url:{current_url}")
 
+    def check_url_contains(self,url_substring):
+        current_url=self.driver.current_url
+        assert url_substring in current_url, f"Očekávaná URL obsahující '{url_substring}', ale aktuální URL je '{url_substring}'"
+        print(f"URL obsahuje '{url_substring}' ... [PASS]")
+
     def click_menu_link(self,link):
         try:
             link_element=self.driver.find_element(By.NAME,link)
@@ -79,6 +85,42 @@ class BaseTest(unittest.TestCase):
             print(f"Odkaz {link} v menu nebyl na stránce nalezen")
 
     def edit(self,edit_name):
-        element=self.driver.find_element(By.NAME,edit_name)
-        element.click()
+        try:
+            element=self.driver.find_element(By.NAME,edit_name)
+            element.click()
+        except NoSuchElementException:
+            print(f"Nelze kliknout na edit link")
+    
+    def remove(self,remove_name):
+        try:
+            element=self.driver.find_element(By.NAME,remove_name)
+            element.click()
+            alert=self.driver.find_element(By.TAG_NAME,"p").text
+            print(f"Text zprávy:{alert}")
+        except NoSuchElementException:
+            print(f"Nelze kliknout na remove link")
+    
+    
+
+    def verify_changes(self,service_name,service_user_name,service_password):
+        service_name_element=self.driver.find_element(By.XPATH, f"//td[text()='{service_name}']")
+        service_user_name_element=self.driver.find_element(By.XPATH, f"//td[text()='{service_user_name}']")
+        service_password_element=self.driver.find_element(By.XPATH, f"//td[text()='{service_password}']")
+
+         # Ověřit, že všechny elementy byly nalezeny
+        assert service_name_element is not None, f"Service name '{service_name}' not found"
+        assert service_user_name_element is not None, f"User name '{service_user_name}' not found"
+        assert service_password_element is not None, f"Password '{service_password}' not found"
+
+        print(f"Byly zkontrolovány nové upravené záznamy: {service_name}, {service_user_name}, {service_password}")
+    
+    def clear_text(self,identifikator):
+        try:
+            element=self.driver.find_element(By.NAME,identifikator)
+            element.clear()
+            print(f"Byla odstraněna hodnota z {identifikator} ... [PASS]")
+        except NoSuchElementException:
+            print(f"Prvek {element} nebyl na stránce nalezen ... [FAIL]")
         
+
+    

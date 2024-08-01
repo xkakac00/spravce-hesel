@@ -13,7 +13,7 @@ class User {
     public function register($fullName, $userName, $password) {
         // Validace vstupních dat
         if (empty($fullName) || empty($userName) || empty($password)) {
-            throw new Exception("Všechna pole jsou povinná!");
+            throw new Exception("All rows are mandatory!");
         }
         // řešeno zde, protože při testování, xampp server vyhazoval chyby, že metoda bindParam si vyžadovala jako parametry proměnné.
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);

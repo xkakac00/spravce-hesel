@@ -6,10 +6,14 @@ use App\Service;
 
 require '../init.php';
 
+
+$responseType=$_SERVER['HTTP_ACCEPT'] ?? 'text/html';
+
 // Kontrola, zda je uživatel přihlášen
 if (!isset($_SESSION['user'])) {
-    echo "Přístup odepřen. Přihlaste se prosím.";
+    header("Location:login.php");
     exit();
+
 }
 
 $user = $_SESSION['user'];
@@ -23,14 +27,27 @@ $service = new Service($database);
 if (isset($_GET['id'])) {
     $serviceId = $_GET['id'];
     if ($service->deleteService($serviceId, $userId)) {
-        $message = "Služba byla úspěšně odstraněna.";
+        $message = "The service has been successfully removed.";
     } else {
-        $error = "Nastala chyba při odstraňování služby.";
+        $error = "A service removal error occurred.";
     }
 }
 
 // Načtení všech služeb pro přihlášeného uživatele
 $services = $service->getAllServices($userId);
+
+// Pokud je požadavek JSON, vrátím JSON odpově
+
+if ($responseType=='application/json'){
+    header("Content-Type:application/json");
+    echo json_encode([
+        'status'=> $error ? 'error':'success',
+        'message'=>$error?$error:$message,
+        'services'=>$services
+    ]);
+    exit();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +60,7 @@ $services = $service->getAllServices($userId);
 <body>
     <section class="dashboard">
         <section class="dashboard-body">
-            <h2>Vaše služby</h2>
+            <h2>Remove password.</h2>
             <?php require("menu.php"); ?>
             <?php if (isset($error)): ?>
                 <p><?php echo htmlspecialchars($error); ?></p>
@@ -54,10 +71,10 @@ $services = $service->getAllServices($userId);
                 <table>
                     <thead>
                         <tr>
-                            <th>Název služby</th>
-                            <th>Uživatelské jméno</th>
-                            <th>Heslo</th>
-                            <th>Akce</th>
+                            <th>Service name</th>
+                            <th>User name</th>
+                            <th>Password</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,13 +85,13 @@ $services = $service->getAllServices($userId);
                                     <td><?php echo htmlspecialchars($service['user_name']); ?></td>
                                     <td><?php echo htmlspecialchars($service['user_password']); ?></td>
                                     <td>
-                                        <a href="delete_service.php?id=<?php echo $service['id']; ?>" onclick="return confirm('Opravdu chcete tuto službu odstranit?');">Odstranit</a>
+                                        <a href="delete_service.php?id=<?php echo $service['id']; ?>" name="remove">Remove password</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="4">Žádné služby nebyly nalezeny.</td>
+                                <td colspan="4">No services were found.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>

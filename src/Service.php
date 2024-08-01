@@ -3,17 +3,17 @@ namespace App;
 use Exception;
 use PDO;
 
-class Service{
+class Service {
     private $db;
 
-    public function __construct(Database $db){
+    public function __construct(Database $db) {
         $this->db = $db->getConnection(); // předani přistupu k db
     }
 
-    public function addService($userId, $serviceName, $serviceUserName, $servicePassword){
+    public function addService($userId, $serviceName, $serviceUserName, $servicePassword) {
         // validace vstupních dat
-        if (empty($serviceName) || empty($serviceUserName) || empty($servicePassword) ){
-            throw new Exception("Všechna pole jsou povinná!");
+        if (empty($serviceName) || empty($serviceUserName) || empty($servicePassword)) {
+            throw new Exception("All rows are mandatory!");
         }
         $sql = "INSERT INTO passwords(user_id, service_name, user_name, user_password) VALUES (:user_id, :service_name, :user_name, :user_password)";
         $stmt = $this->db->prepare($sql);
@@ -26,7 +26,11 @@ class Service{
         return $stmt->execute();
     }
 
-    public function editService($id, $userId, $serviceName, $serviceUserName, $servicePassword){
+    public function editService($id, $userId, $serviceName, $serviceUserName, $servicePassword) {
+        // validace vstupních dat
+        if (empty($serviceName) || empty($serviceUserName) || empty($servicePassword)) {
+            throw new Exception("All rows are mandatory!");
+        }
         $sql = "UPDATE passwords SET service_name = :service_name, user_name = :user_name, user_password = :user_password WHERE id = :id AND user_id = :user_id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id);
@@ -39,7 +43,7 @@ class Service{
         return $stmt->execute();
     }
 
-    public function getAllServices($userId){
+    public function getAllServices($userId) {
         $sql = "SELECT id, service_name, user_name, user_password FROM passwords WHERE user_id = :user_id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':user_id', $userId);
@@ -47,7 +51,7 @@ class Service{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function deleteService($id, $userId){
+    public function deleteService($id, $userId) {
         $sql = "DELETE FROM passwords WHERE id = :id AND user_id = :user_id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id);

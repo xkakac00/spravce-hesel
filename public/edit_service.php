@@ -19,18 +19,46 @@ $userId = $user['id'];
 $database = new Database();
 $service = new Service($database);
 
+$error = ''; // Inicializace proměnné pro chybovou zprávu
+$successMessage= ''; // Inicializace proměnné pro úspěšnou zprávu
+
+$responseType=$_SERVER['HTTP_ACCEPT'] ?? 'text/html';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $serviceId = $_POST['id'];
     $serviceName = $_POST['service_name'];
     $serviceUserName = $_POST['service_user_name'];
-    $servicePassword = $_POST['service_password'];
+    $servicePassword = $_POST['service_user_password'];
 
-    if ($service->editService($serviceId, $userId, $serviceName, $serviceUserName, $servicePassword)) {
+    // Validace vstupních dat
+    if (empty($serviceName) || empty($serviceUserName) || empty($servicePassword)) {
+        $error = "All rows are mandatory!";
+    } else {
+        if ($service->editService($serviceId, $userId, $serviceName, $serviceUserName, $servicePassword)) {
+            $successMessage="Password successfully updated";
+            sleep(1);
+            header("Location: view_services.php");
+            exit();
+        } else {
+            $error = "An error occurred while updating the service.";
+        }
+    }
+
+    if ($responseType=='application/json'){
+        header('Content-Type: application/json');
+        echo json_encode([
+            'status'=> $error ? 'error':'success',
+            'message'=> $error ? $error : $successMessage
+        ]);
+        exit();
+    }
+
+    if (empty($error)) {
         header("Location: view_services.php");
         exit();
-    } else {
-        $error = "Nastala chyba při aktualizaci služby.";
     }
+
+
 } else {
     if (isset($_GET['id'])) {
         $serviceId = $_GET['id'];
@@ -88,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 5px;
         }
 
-        form button {
+        form input[type="submit"] {
             background-color: #4CAF50;
             color: white;
             padding: 10px 15px;
@@ -97,8 +125,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             cursor: pointer;
         }
 
-        form button:hover {
+        form input[type="submit"]:hover {
             background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            background-color: #f8d7da;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -107,16 +144,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <section class="dashboard-body">
             <h2>Editing password</h2>
             <?php require("menu.php"); ?>
-            <?php if (isset($error)): ?>
-                <p><?php echo htmlspecialchars($error); ?></p>
+            <?php if (!empty($error)): ?>
+                <div class="error"><?php echo htmlspecialchars($error); ?></div>
             <?php endif; ?>
             <?php if (isset($serviceDetails)): ?>
-                <form action="edit_service.php" method="POST">
+                <form action="edit_service.php?id=<?php echo htmlspecialchars($serviceDetails['id']); ?>" method="POST">
                     <input type="hidden" name="id" value="<?php echo htmlspecialchars($serviceDetails['id']); ?>">
-                    <input type="text" name="service_name" placeholder="Service name" value="<?php echo htmlspecialchars($serviceDetails['service_name']); ?>" required>
-                    <input type="text" name="service_user_name" placeholder="Service user name" value="<?php echo htmlspecialchars($serviceDetails['user_name']); ?>" required>
-                    <input type="password" name="service_password" placeholder="Service user password" value="<?php echo htmlspecialchars($serviceDetails['user_password']); ?>" required>
-                    <button type="submit">Update the password</button>
+                    <input type="text" name="service_name" placeholder="Service name" value="<?php echo htmlspecialchars($serviceDetails['service_name']); ?>">
+                    <input type="text" name="service_user_name" placeholder="Service user name" value="<?php echo htmlspecialchars($serviceDetails['user_name']); ?>">
+                    <input type="password" name="service_user_password" placeholder="Service user password" value="<?php echo htmlspecialchars($serviceDetails['user_password']); ?>">
+                    <input type="submit" value="Update the password">
                 </form>
             <?php endif; ?>
             <nav>

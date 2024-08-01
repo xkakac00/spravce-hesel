@@ -5,34 +5,72 @@ require '../init.php';
 use App\Database;
 use App\User;
 
+// Inicializace tříd
 $database = new Database();
 $user = new User($database);
 
-$error = ''; // Inicializace proměnné pro chybu
-$success = ''; // Inicializace proměnné pro úspěch
+$error = ''; // Proměnná pro chybové zprávy
+$success = ''; // Proměnná pro úspěšné zprávy
+
+// Detekce typu požadavku
+$responseType = $_SERVER['HTTP_ACCEPT'] ?? 'text/html';
+
+// Kontrola, zda je požadavek JSON
+if ($responseType == "application/json") {
+    // Čtení dat z JSON vstupu
+    $input = json_decode(file_get_contents("php://input"), true);
+    $fullName = $input['full_name'] ?? '';
+    $userName = $input['user_name'] ?? '';
+    $password = $input['password'] ?? '';
+} else {
+    // Čtení dat z POST požadavku
+    $fullName = $_POST['full_name'] ?? '';
+    $userName = $_POST['user_name'] ?? '';
+    $password = $_POST['password'] ?? '';
+}
 
 try {
+    // Zpracování POST požadavku
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Načtení dat z POST požadavku
-        $fullName = $_POST['full_name'];
-        $userName = $_POST['user_name'];
-        $password = $_POST['password'];
-
-        // Kontrola, zda uživatel již existuje
-        if ($user->userExists($userName)) {
-            $error = "Uživatel s tímto jménem již existuje.";
+        // Validace vstupních dat
+        if (empty($fullName) || empty($userName) || empty($password)) {
+            $error = "All fields are required!";
         } else {
-            // Pokus o registraci uživatele
-            if ($user->register($fullName, $userName, $password)) {
-                $success = "Uživatel byl úspěšně zaregistrován!"; // Nastavení úspěšné hlášky
+            // Kontrola, zda uživatelské jméno již existuje
+            if ($user->userExists($userName)) {
+                $error = "The user with this name already exists.";
             } else {
-                $error = "Registrace se nezdařila.";
+                // Pokus o registraci uživatele
+                if ($user->register($fullName, $userName, $password)) {
+                    $success = "The User has been successfully registered!"; // Nastavení úspěšné hlášky
+                    
+                    // Pokud je požadavek JSON, vrátíme JSON odpověď
+                    if ($responseType == 'application/json') {
+                        header("Content-Type: application/json");
+                        echo json_encode([
+                            'status' => 'success',
+                            'message' => $success
+                        ]);
+                        exit();
+                    }
+                } else {
+                    $error = "Registration failed. Please try again.";
+                }
             }
         }
     }
 } catch (Exception $e) {
-    // getMessage() je metoda z třídy Exception
-    $error = $e->getMessage();
+    $error = "Error: " . $e->getMessage();
+}
+
+// Zpracování chyby pro JSON odpověď
+if ($responseType == 'application/json' && !empty($error)) {
+    header("Content-Type: application/json");
+    echo json_encode([
+        'status' => 'error',
+        'message' => $error
+    ]);
+    exit();
 }
 ?>
 
