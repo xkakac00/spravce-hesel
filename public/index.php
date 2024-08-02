@@ -1,3 +1,8 @@
 <?php
-header("location:login.php")
+if (isset($_SESSION['user'])){
+    header("location:dashboard.php");
+}
+else{
+    header("location:login.php")
+}
 ?>
