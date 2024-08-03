@@ -16,45 +16,70 @@ if (!isset($_SESSION['user'])) {
 $user = $_SESSION['user'];
 $userId = $user['id'];
 
-// připojeni k databazi a Service instance
+// Připojeni k databázi a Service instance
 $database = new Database();
 $service = new Service($database);
 
-// Proměnná pro chybové zprávy
+// Proměnné pro chybové a úspěšné zprávy
 $errorMessage = "";
 $success = ''; // Inicializace proměnné pro úspěch
 
-// pokud proměnná není nastavena, nebo je null nastaví se na text/html
-$responseType=$_SERVER['HTTP_ACCEPT'] ?? 'text/html';
+// Nastavení typu odpovědi na základě Accept hlavičky
+$responseType = $_SERVER['HTTP_ACCEPT'] ?? 'text/html';
 
+// Kontrola typu požadavku
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $serviceName = $_POST['service_name'] ?? '';
-    $serviceUserName = $_POST['service_user_name'] ?? '';
-    $servicePassword = $_POST['service_user_password'] ?? '';
+    // Kontrola obsahu hlavičky pro JSON
+    if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
+        $input = json_decode(file_get_contents('php://input'), true);
+
+        // Kontrola na chyby při dekódování JSON
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            $errorMessage = "Invalid JSON input: " . json_last_error_msg();
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'error', 'message' => $errorMessage]);
+            exit();
+        }
+
+        $serviceName = $input['service_name'] ?? '';
+        $serviceUserName = $input['service_user_name'] ?? '';
+        $servicePassword = $input['service_user_password'] ?? '';
+    } else {
+        // Jinak přečteme data z POST
+        $serviceName = $_POST['service_name'] ?? '';
+        $serviceUserName = $_POST['service_user_name'] ?? '';
+        $servicePassword = $_POST['service_user_password'] ?? '';
+    }
 
     // Validace vstupních dat
     if (empty($serviceName) || empty($serviceUserName) || empty($servicePassword)) {
-        $errorMessage = "All rows are mandatory!";
+        $errorMessage = "All fields are mandatory!";
     } else {
-
-        // Přidání služby
-        if ($service->addService($userId, $serviceName, $serviceUserName, $servicePassword)) {
-           $success="Password successfully added!";
-        } else {
-            $errorMessage = "Failed to add the password.";
-        }
-
-        // Pokud je požadavek typu application/json, vrátíme JSON odpověd 
-        if ($responseType=='application/json'){
-            header("Content-Type:application/json");
-            echo json_encode([
-                'status' => $errorMessage ? 'error':'success',  
-                'message' => $errorMessage ? $errorMessage : $success
-            ]);
-            exit();
+        try {
+            // Přidání služby
+            if ($service->addService($userId, $serviceName, $serviceUserName, $servicePassword)) {
+                $success = "Password successfully added!";
+            } else {
+                $errorMessage = "Failed to add the password.";
+            }
+        } catch (Exception $e) {
+            $errorMessage = "Error: " . $e->getMessage();
         }
     }
+
+    // Vrátíme JSON odpověď, pokud je požadavek typu application/json
+    if ($responseType == 'application/json') {
+        header("Content-Type: application/json");
+        echo json_encode([
+            'status' => $errorMessage ? 'error' : 'success',
+            'message' => $errorMessage ?: $success
+        ]);
+        exit();
+    }
 }
+
+// Pro HTML odpověď
+header("Content-Type: text/html");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form action="add_service.php" method="POST">
             <input type="hidden" name="action" value="add">
             <input type="text" name="service_name" placeholder="Service name">
-            <input type="text" name="service_user_name" placeholder="Service user name" >
+            <input type="text" name="service_user_name" placeholder="Service user name">
             <input type="password" name="service_user_password" placeholder="Service user password">
             <input type="submit" value="Add password"><input type="reset" value="Reset form">
         </form>
