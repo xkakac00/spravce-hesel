@@ -1,71 +1,111 @@
 <?php
-namespace App;
-use Exception;
-use PDO;
+session_start();
 
-class Service {
-    private $db;
+use App\Database;
+use App\Service;
 
-    public function __construct(Database $db) {
-        $this->db = $db->getConnection(); // předani přistupu k db
-    }
+require '../init.php';
 
-    public function addService($userId, $serviceName, $serviceUserName, $servicePassword) {
-        // validace vstupních dat
-        if (empty($serviceName) || empty($serviceUserName) || empty($servicePassword)) {
-            throw new Exception("All rows are mandatory!");
+// Kontrola, zda je uživatel přihlášen
+if (!isset($_SESSION['user'])) {
+    // Pokud uživatel není přihlášen, přesměrujeme ho na login.php
+    header("Location: login.php");
+    exit();
+}
+
+$user = $_SESSION['user'];
+$userId = $user['id'];
+
+// Připojeni k databázi a Service instance
+$database = new Database();
+$service = new Service($database);
+
+// Proměnné pro chybové a úspěšné zprávy
+$errorMessage = "";
+$success = ''; // Inicializace proměnné pro úspěch
+
+// Nastavení typu odpovědi na základě Accept hlavičky
+$responseType = $_SERVER['HTTP_ACCEPT'] ?? 'text/html';
+
+// Kontrola typu požadavku
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Kontrola obsahu hlavičky pro JSON
+    if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
+        $input = json_decode(file_get_contents('php://input'), true);
+
+        // Kontrola na chyby při dekódování JSON
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            $errorMessage = "Invalid JSON input: " . json_last_error_msg();
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'error', 'message' => $errorMessage]);
+            exit();
         }
-        $sql = "INSERT INTO passwords(user_id, service_name, user_name, user_password) VALUES (:user_id, :service_name, :user_name, :user_password)";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':user_id', $userId);
-        $stmt->bindParam(':service_name', $serviceName);
-        $stmt->bindParam(':user_name', $serviceUserName);
-        // Hash hesla před jeho vložením do databáze
-        //$hashedPassword = password_hash($servicePassword, PASSWORD_DEFAULT);
-        $stmt->bindParam(':user_password', $servicePassword);
-        return $stmt->execute();
+
+        $serviceName = $input['service_name'] ?? '';
+        $serviceUserName = $input['service_user_name'] ?? '';
+        $servicePassword = $input['service_user_password'] ?? '';
+    } else {
+        // Jinak přečteme data z POST
+        $serviceName = $_POST['service_name'] ?? '';
+        $serviceUserName = $_POST['service_user_name'] ?? '';
+        $servicePassword = $_POST['service_user_password'] ?? '';
     }
 
-    public function editService($id, $userId, $serviceName, $serviceUserName, $servicePassword) {
-        // validace vstupních dat
-        if (empty($serviceName) || empty($serviceUserName) || empty($servicePassword)) {
-            throw new Exception("All rows are mandatory!");
+    // Validace vstupních dat
+    if (empty($serviceName) || empty($serviceUserName) || empty($servicePassword)) {
+        $errorMessage = "All fields are mandatory!";
+    } else {
+        try {
+            // Přidání služby
+            if ($service->addService($userId, $serviceName, $serviceUserName, $servicePassword)) {
+                $success = "Password successfully added!";
+            } else {
+                $errorMessage = "Failed to add the password.";
+            }
+        } catch (Exception $e) {
+            $errorMessage = "Error: " . $e->getMessage();
         }
-        $sql = "UPDATE passwords SET service_name = :service_name, user_name = :user_name, user_password = :user_password WHERE id = :id AND user_id = :user_id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':user_id', $userId);
-        $stmt->bindParam(':service_name', $serviceName);
-        $stmt->bindParam(':user_name', $serviceUserName);
-        // Hash hesla před jeho aktualizací v databázi
-        //$hashedPassword = password_hash($servicePassword, PASSWORD_DEFAULT);
-        $stmt->bindParam(':user_password', $servicePassword);
-        return $stmt->execute();
     }
 
-    public function getAllServices($userId) {
-        $sql = "SELECT id, service_name, user_name, user_password FROM passwords WHERE user_id = :user_id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':user_id', $userId);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function deleteService($id, $userId) {
-        $sql = "DELETE FROM passwords WHERE id = :id AND user_id = :user_id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':user_id', $userId);
-        return $stmt->execute();
-    }
-
-    public function getServiceById($id, $userId) {
-        $sql = "SELECT id, service_name, user_name, user_password FROM passwords WHERE id = :id AND user_id = :user_id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':user_id', $userId);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+    // Vrátíme JSON odpověď, pokud je požadavek typu application/json
+    if ($responseType == 'application/json') {
+        header("Content-Type: application/json");
+        echo json_encode([
+            'status' => $errorMessage ? 'error' : 'success',
+            'message' => $errorMessage ?: $success
+        ]);
+        exit();
     }
 }
+
+// Pro HTML odpověď
+header("Content-Type: text/html");
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../static/css/dashboard.css">
+</head>
+<body>
+    <section class="dashboard">
+        <h2>Add password section</h2>
+        <?php require("menu.php");?>
+        <form action="add_service.php" method="POST">
+            <input type="hidden" name="action" value="add">
+            <input type="text" name="service_name" placeholder="Service name">
+            <input type="text" name="service_user_name" placeholder="Service user name">
+            <input type="password" name="service_user_password" placeholder="Service user password">
+            <input type="submit" value="Add password"><input type="reset" value="Reset form">
+        </form>
+        <?php if ($errorMessage): ?>
+            <div class="error"><?php echo htmlspecialchars($errorMessage); ?></div>
+        <?php endif; ?>
+        <?php if ($success): ?>
+            <div class="success"><?php echo htmlspecialchars($success); ?></div>
+        <?php endif; ?>
+    </section>
+</body>
+</html>
