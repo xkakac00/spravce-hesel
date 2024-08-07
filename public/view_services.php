@@ -8,24 +8,40 @@ require '../init.php';
 
 // Kontrola, zda je uživatel přihlášen
 if (!isset($_SESSION['user'])) {
-    // Pokud uživatel není přihlášen, přesměrujeme ho na login.php
-    header("Location: login.php");
-    exit();
+    if ($_SERVER['HTTP_ACCEPT'] === 'application/json') {
+        header('Content-Type: application/json');
+        echo json_encode(['status' => 'error', 'message' => 'User not logged in.']);
+        exit();
+    } else {
+        // Pokud uživatel není přihlášen, přesměrujeme ho na login.php
+        header("Location: login.php");
+        exit();
+    }
 }
 
+$user = $_SESSION['user'];
+$userId = $user['id'];
 
-$user=$_SESSION['user'];
-//$userName=$user['user_name'];
-$userId=$user['id'];
+// Připojeni k databázi a vytvoření instance třídy Service
+$database = new Database();
+$service = new Service($database);
 
-// připojeni k databazi a Service instance
-$database=new Database();
-$service=new Service($database);
+// Načtení všech služeb pro přihlášeného uživatele
+$services = $service->getAllServices($userId);
 
-// načtení všech služeb pro přihlášeného uživatele
-$services=$service->getAllServices($userId);
+// Nastavení typu odpovědi na základě Accept hlavičky
+$responseType = $_SERVER['HTTP_ACCEPT'] ?? 'text/html';
 
+if ($responseType === 'application/json') {
+    header("Content-Type: application/json");
+    echo json_encode([
+        'status' => 'success',
+        'services' => $services
+    ]);
+    exit();
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,36 +52,34 @@ $services=$service->getAllServices($userId);
 </head>
 <body>
 <section class="dashboard">
-
-            <h2>Your passwords</h2>
-            <?php require("menu.php"); ?>
-            <table>
-                <thead>
+    <h2>Your passwords</h2>
+    <?php require("menu.php"); ?>
+    <table>
+        <thead>
+            <tr>
+                <th>Service name</th>
+                <th>User name</th>
+                <th>Password</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (!empty($services)): ?>
+                <?php foreach ($services as $service): ?>
                     <tr>
-                        <th>Service name</th>
-                        <th>User name</th>
-                        <th>Password</th>
-                        <th>Edit</th>
+                        <td><?php echo htmlspecialchars($service['service_name']); ?></td>
+                        <td><?php echo htmlspecialchars($service['user_name']); ?></td>
+                        <td><?php echo htmlspecialchars($service['user_password']); ?></td>
+                        <td><a href="edit_service.php?id=<?php echo $service['id']; ?>" name="edit">Edit</a></td>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php if (!empty($services)): ?>
-                        <?php foreach ($services as $service): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($service['service_name']); ?></td>
-                                <td><?php echo htmlspecialchars($service['user_name']); ?></td>
-                                <td><?php echo htmlspecialchars($service['user_password']); ?></td>
-                                <td><a href="edit_service.php?id=<?php echo $service['id']; ?>" name="edit">Edit</a></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="3">No services were found.</td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </section>
-
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="4">No services were found.</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+</section>
 </body>
 </html>

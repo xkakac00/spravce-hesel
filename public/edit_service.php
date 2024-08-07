@@ -20,22 +20,44 @@ $database = new Database();
 $service = new Service($database);
 
 $error = ''; // Inicializace proměnné pro chybovou zprávu
-$successMessage= ''; // Inicializace proměnné pro úspěšnou zprávu
+$successMessage = ''; // Inicializace proměnné pro úspěšnou zprávu
 
-$responseType=$_SERVER['HTTP_ACCEPT'] ?? 'text/html';
+$responseType = $_SERVER['HTTP_ACCEPT'] ?? 'text/html';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $serviceId = $_POST['id'];
-    $serviceName = $_POST['service_name'];
-    $serviceUserName = $_POST['service_user_name'];
-    $servicePassword = $_POST['service_user_password'];
+    if ($responseType == 'application/json') {
+        // Zpracování JSON požadavku
+        $input = json_decode(file_get_contents("php://input"), true);
+        $serviceId = $input['id'] ?? ''; // Použití aktualizovaných názvů
+        $serviceName = $input['updated_service_name'] ?? ''; 
+        $serviceUserName = $input['updated_service_user_name'] ?? ''; 
+        $servicePassword = $input['updated_service_user_password'] ?? ''; 
+    } else {
+        // Zpracování HTML formuláře
+        $serviceId = $_POST['id'] ?? '';
+        $serviceName = $_POST['updated_service_name'] ?? ''; 
+        $serviceUserName = $_POST['updated_service_user_name'] ?? ''; 
+        $servicePassword = $_POST['updated_service_user_password'] ?? ''; 
+    }
 
     // Validace vstupních dat
     if (empty($serviceName) || empty($serviceUserName) || empty($servicePassword)) {
         $error = "All rows are mandatory!";
     } else {
         if ($service->editService($serviceId, $userId, $serviceName, $serviceUserName, $servicePassword)) {
-            $successMessage="Password successfully updated";
+            $successMessage = "Password successfully updated";
+
+            // Odpověď pro JSON požadavek
+            if ($responseType == 'application/json') {
+                header('Content-Type: application/json');
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => $successMessage
+                ]);
+                exit();
+            }
+
+            // Přesměrování pro HTML formulář
             sleep(1);
             header("Location: view_services.php");
             exit();
@@ -44,21 +66,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    if ($responseType=='application/json'){
+    // Odpověď pro JSON požadavek v případě chyby
+    if ($responseType == 'application/json' && !empty($error)) {
         header('Content-Type: application/json');
         echo json_encode([
-            'status'=> $error ? 'error':'success',
-            'message'=> $error ? $error : $successMessage
+            'status' => 'error',
+            'message' => $error
         ]);
         exit();
     }
-
-    if (empty($error)) {
-        header("Location: view_services.php");
-        exit();
-    }
-
-
 } else {
     if (isset($_GET['id'])) {
         $serviceId = $_GET['id'];
@@ -71,7 +87,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -150,9 +165,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php if (isset($serviceDetails)): ?>
                 <form action="edit_service.php?id=<?php echo htmlspecialchars($serviceDetails['id']); ?>" method="POST">
                     <input type="hidden" name="id" value="<?php echo htmlspecialchars($serviceDetails['id']); ?>">
-                    <input type="text" name="service_name" placeholder="Service name" value="<?php echo htmlspecialchars($serviceDetails['service_name']); ?>">
-                    <input type="text" name="service_user_name" placeholder="Service user name" value="<?php echo htmlspecialchars($serviceDetails['user_name']); ?>">
-                    <input type="password" name="service_user_password" placeholder="Service user password" value="<?php echo htmlspecialchars($serviceDetails['user_password']); ?>">
+                    <input type="text" name="updated_service_name" placeholder="Service name" value="<?php echo htmlspecialchars($serviceDetails['service_name']); ?>">
+                    <input type="text" name="updated_service_user_name" placeholder="Service user name" value="<?php echo htmlspecialchars($serviceDetails['user_name']); ?>">
+                    <input type="password" name="updated_service_user_password" placeholder="Service user password" value="<?php echo htmlspecialchars($serviceDetails['user_password']); ?>">
                     <input type="submit" value="Update the password">
                 </form>
             <?php endif; ?>

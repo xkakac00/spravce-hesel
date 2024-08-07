@@ -6,18 +6,20 @@ use App\Service;
 
 require '../init.php';
 
-
-$responseType=$_SERVER['HTTP_ACCEPT'] ?? 'text/html';
+$responseType = $_SERVER['HTTP_ACCEPT'] ?? 'text/html';
 
 // Kontrola, zda je uživatel přihlášen
 if (!isset($_SESSION['user'])) {
-    header("Location:login.php");
+    header("Location: login.php");
     exit();
-
 }
 
 $user = $_SESSION['user'];
 $userId = $user['id'];
+
+// Inicializace proměnných
+$error = null;
+$message = null;
 
 // Připojení k databázi a vytvoření instance třídy Service
 $database = new Database();
@@ -26,29 +28,37 @@ $service = new Service($database);
 // Zkontrolujeme, zda byl předán parametr 'id' přes GET
 if (isset($_GET['id'])) {
     $serviceId = $_GET['id'];
-    if ($service->deleteService($serviceId, $userId)) {
-        $message = "The service has been successfully removed.";
+
+    // Kontrola, zda služba existuje před smazáním
+    $existingService = $service->getServiceById($serviceId, $userId);
+
+    if ($existingService) {
+        if ($service->deleteService($serviceId, $userId)) {
+            $message = "The service has been successfully removed.";
+        } else {
+            $error = "A service removal error occurred.";
+        }
     } else {
-        $error = "A service removal error occurred.";
+        $error = "Service does not exist.";
     }
 }
 
 // Načtení všech služeb pro přihlášeného uživatele
 $services = $service->getAllServices($userId);
 
-// Pokud je požadavek JSON, vrátím JSON odpově
-
-if ($responseType=='application/json'){
-    header("Content-Type:application/json");
+// Pokud je požadavek JSON, vrátím JSON odpověď
+if ($responseType == 'application/json') {
+    header("Content-Type: application/json");
     echo json_encode([
-        'status'=> $error ? 'error':'success',
-        'message'=>$error?$error:$message,
-        'services'=>$services
+        'status' => $error ? 'error' : 'success',
+        'message' => $error ?: $message,
+        'services' => $services
     ]);
     exit();
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,10 +72,10 @@ if ($responseType=='application/json'){
         <section class="dashboard-body">
             <h2>Remove password.</h2>
             <?php require("menu.php"); ?>
-            <?php if (isset($error)): ?>
-                <p><?php echo htmlspecialchars($error); ?></p>
-            <?php elseif (isset($message)): ?>
-                <p><?php echo htmlspecialchars($message); ?></p>
+            <?php if ($error): ?>
+                <p class="error"><?php echo htmlspecialchars($error); ?></p>
+            <?php elseif ($message): ?>
+                <p class="success"><?php echo htmlspecialchars($message); ?></p>
             <?php endif; ?>
             <div class="table-wrapper">
                 <table>

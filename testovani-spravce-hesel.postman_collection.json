@@ -1,0 +1,232 @@
+{
+	"info": {
+		"_postman_id": "bef660ec-cc59-450f-b78a-090b19245dd3",
+		"name": "testovani-spravce-hesel",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34828806"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "login-with-credential",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"Login successful\", () => pm.expect(pm.response.json().message).to.equal(\"Login successful\"));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Cookie",
+								"value": "PHPSESSID=rnqsr0ve07e78fksapl152jg8o\n",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_name\":\"kamil\",\r\n    \"password\":\"kamil\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/spravce/public/login.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"spravce",
+								"public",
+								"login.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "add-password",
+			"item": [
+				{
+					"name": "add-password",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookies",
+								"value": "bd2cmhb5ot5m6t8mqielfi7399",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\":4,\r\n    \"service_name\":\"sparta_id\",\r\n    \"service_user_name\":\"kamcak\",\r\n    \"service_user_password\":\"kamcacek\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/spravce/public/add_service.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"spravce",
+								"public",
+								"add_service.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "remove-password",
+			"item": [
+				{
+					"name": "delete_service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/spravce/public/delete_service.php?id=21",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"spravce",
+								"public",
+								"delete_service.php"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "21"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "show-all-password",
+			"item": [
+				{
+					"name": "view-all-services",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Cookie",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/spravce/public/view_services.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"spravce",
+								"public",
+								"view_services.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

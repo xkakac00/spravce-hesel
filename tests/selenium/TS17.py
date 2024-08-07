@@ -15,9 +15,9 @@ class TS17(BaseTest):
         self.check_url("http://localhost/spravce/public/view_services.php")
         self.edit("edit")
         self.check_url_contains("edit_service.php")
-        self.fill_text("service_name","www.seznam.cz")
-        self.fill_text("service_user_name","TestUser")
-        self.clear_text("service_user_password")
+        self.fill_text("updated_service_name","www.seznam.cz")
+        self.fill_text("updated_service_user_name","TestUser")
+        self.clear_text("updated_service_user_password")
         self.click_button("input[type='submit']", "error")
         
         

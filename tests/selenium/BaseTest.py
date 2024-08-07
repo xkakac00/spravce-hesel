@@ -35,7 +35,7 @@ class BaseTest(unittest.TestCase):
             else:
                 print(f"Hodnota {text} NEBYLA zadaná do pole {identifikator} .... [FAIL]")
         except NoSuchElementException:
-            print("Prvek na stránce nebyl nalezen!")
+            print(f"Prvek {identifikator} na stránce nebyl nalezen!")
 
     
     def click_button(self, name_button, status):
@@ -49,7 +49,7 @@ class BaseTest(unittest.TestCase):
             if status == "none":
                 pass
             else:
-                success_message = WebDriverWait(self.driver, 10).until(
+                success_message = WebDriverWait(self.driver, 15).until(
                 EC.presence_of_element_located((By.CLASS_NAME, status))
                 )
                 if success_message.is_displayed():

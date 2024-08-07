@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 require '../init.php';
 
 use App\Database;
@@ -9,50 +10,55 @@ $database = new Database();
 $user = new User($database);
 
 $error = ''; // Inicializace proměnné pro chybu
-$successMesasage=''; // Inicializace proměnné pro úspěch
+$successMessage = ''; // Inicializace proměnné pro úspěch
 
 $responseType = $_SERVER['HTTP_ACCEPT'] ?? 'text/html';
 
-// Pokud je požadavek typu json
-if ($responseType=="application/json"){
-    $input=json_decode(file_get_contents("php://input"),true);
-    $userName=$input['user_name'] ?? '';
-    $password=$input['password'] ?? '';
-}
-// Pokud je to normální UI formulář
-else{
-    $userName=$_POST['user_name'] ?? '';
-    $password=$_POST['password'] ?? '';
+// Nastavte výchozí typ odpovědi na HTML
+$contentType = 'text/html';
+
+if ($responseType === "application/json") {
+    $contentType = 'application/json';
+    $input = json_decode(file_get_contents("php://input"), true);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        $error = "Invalid JSON input: " . json_last_error_msg();
+        header('Content-Type: application/json');
+        echo json_encode(['status' => 'error', 'message' => $error]);
+        exit();
+    }
+
+    $userName = $input['user_name'] ?? '';
+    $password = $input['password'] ?? '';
+} else {
+    $userName = $_POST['user_name'] ?? '';
+    $password = $_POST['password'] ?? '';
 }
 
-try{
-    if ($_SERVER["REQUEST_METHOD"] == "POST"){
-        // Přihlášení uživatele
-        if ($user->login($userName,$password)){
-            if ($responseType=='application/json'){
-                // Pokud je požadavek json, vracim json odpověd
+try {
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        if ($user->login($userName, $password)) {
+            if ($responseType === 'application/json') {
+                header('Content-Type: application/json');
                 echo json_encode([
-                    'status'=>'success',
-                    'message'=>'Login successful'
+                    'status' => 'success',
+                    'message' => 'Login successful'
                 ]);
                 exit();
-
-            } 
-            // Přesměrování pro normální formulář.
-            else{
-                header("location:dashboard.php");
+            } else {
+                header("Location: dashboard.php");
                 exit();
             }
-            }else{
-                $error="Login failed!";
-            }
+        } else {
+            $error = "Login failed!";
         }
     }
-catch(Exception $e){
-    $error = "Error:".$e->getMessage();
+} catch (Exception $e) {
+    $error = "Error: " . $e->getMessage();
 }
 
-if ($responseType == 'application/json' && !empty($error)) {
+if ($responseType === 'application/json' && !empty($error)) {
+    header('Content-Type: application/json');
     echo json_encode([
         'status' => 'error',
         'message' => $error
@@ -60,30 +66,7 @@ if ($responseType == 'application/json' && !empty($error)) {
     exit();
 }
 
-
-
-
-
-
-
-#try {
-#    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Načtení dat z POST požadavku
-#        $userName = $_POST['user_name'] ?? '';  // ?? vrátí výchozí hodnotu '' pokud levá strana je null nebo není nastavena.
-#        $password = $_POST['password'] ?? '';
-
-#        // Pokus o přihlášení uživatele
-#        if ($user->login($userName, $password)) {
-#            header("Location: dashboard.php");
-#            exit(); // zde už nepotřebuji, aby se další kod vykonal
-#        } else {
-#            $error = "Login failed!";
-#        }
-#    }
-#} catch (Exception $e) {
-    // getMessage() je metoda z třídy Exception
-#    $error = "Error: " . $e->getMessage();
-#}
+header('Content-Type: text/html');
 ?>
 
 <!DOCTYPE html>

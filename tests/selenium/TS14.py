@@ -15,9 +15,9 @@ class TS14(BaseTest):
         self.check_url("http://localhost/spravce/public/view_services.php")
         self.edit("edit")
         self.check_url_contains("edit_service.php")
-        self.clear_text("service_name")
-        self.clear_text("service_user_name")
-        self.clear_text("service_user_password")
+        self.clear_text("updated_service_name")
+        self.clear_text("updated_service_user_name")
+        self.clear_text("updated_service_user_password")
         self.click_button("input[type='submit']", "error")
         
         
