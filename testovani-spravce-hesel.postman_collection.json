@@ -11,9 +11,41 @@
 			"item": [
 				{
 					"name": "register",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"full_name\":\"Kamil Kakáček\",\r\n    \"user_name\":\"kamil\",\r\n    \"password\":\"kamil\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/spravce/public/register.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"spravce",
+								"public",
+								"register.php"
+							]
+						}
 					},
 					"response": []
 				}
@@ -98,7 +130,7 @@
 						"header": [
 							{
 								"key": "Cookies",
-								"value": "bd2cmhb5ot5m6t8mqielfi7399",
+								"value": "q14rkmlbvuciultk74i1dqrpuv",
 								"type": "text"
 							},
 							{
@@ -165,7 +197,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost/spravce/public/delete_service.php?id=21",
+							"raw": "http://localhost/spravce/public/delete_service.php?id=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -178,7 +210,7 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "21"
+									"value": "1"
 								}
 							]
 						}
