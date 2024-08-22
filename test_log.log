@@ -1,0 +1,218 @@
+C:\xampp\htdocs\spravce\tests\selenium>python3.12 main_flow.py
+=============================================
+Začíná test TS01: Registrace uživatele do systému
+=============================================
+Prohlížeč byl otevřen na požadované stránce .... [PASS]
+Hodnota DonSalieri byla úspěšně zadaná do pole full_name .... [PASS]
+Hodnota DonS byla úspěšně zadaná do pole user_name .... [PASS]
+Hodnota P.lb.45_?1! byla úspěšně zadaná do pole password .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Text zprávy: The User has been successfully registered!
+.=============================================
+Začíná test TS02: Registrace existujího uživatele do systému
+=============================================
+Prohlížeč byl otevřen na požadované stránce .... [PASS]
+Hodnota DonSalieri byla úspěšně zadaná do pole full_name .... [PASS]
+Hodnota DonS byla úspěšně zadaná do pole user_name .... [PASS]
+Hodnota P.lb.45_?1! byla úspěšně zadaná do pole password .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Text zprávy: The user with this name already exists.
+.=============================================
+Začíná test TS03: Resetování formuláře.
+=============================================
+Prohlížeč byl otevřen na požadované stránce .... [PASS]
+Hodnota DonSalieri byla úspěšně zadaná do pole full_name .... [PASS]
+Hodnota DonS byla úspěšně zadaná do pole user_name .... [PASS]
+Hodnota P.lb.45_?1! byla úspěšně zadaná do pole password .... [PASS]
+Bylo stisknuto tlačítko pro vyresetovaní formuláře.
+Hodnoty ve formuláři byly smazané.... [PASS]
+.=============================================
+Začíná test TS04: Validace povinných polí ve formuláři.
+=============================================
+Prohlížeč byl otevřen na požadované stránce .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Text zprávy: All fields are required!
+.=============================================
+Začíná test TS05: Validace povinných polí ve formuláři - vyplněno pouze FullName
+=============================================
+Prohlížeč byl otevřen na požadované stránce .... [PASS]
+Hodnota Don Salieri byla úspěšně zadaná do pole full_name .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Text zprávy: All fields are required!
+.=============================================
+Začíná test TS06: Validace povinných polí ve formuláři - vyplněno pouze UserName
+=============================================
+Prohlížeč byl otevřen na požadované stránce .... [PASS]
+Hodnota DonS byla úspěšně zadaná do pole user_name .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Text zprávy: All fields are required!
+.=============================================
+Začíná test TS07: Validace povinných polí ve formuláři - vyplněno pouze Password
+=============================================
+Prohlížeč byl otevřen na požadované stránce .... [PASS]
+Hodnota P.lb.45_?1! byla úspěšně zadaná do pole password .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Text zprávy: All fields are required!
+.=============================================
+Začíná test TS08: Přihlášení uživatele.
+=============================================
+Prohlížeč byl otevřen na požadované stránce .... [PASS]
+Hodnota DonS byla úspěšně zadaná do pole user_name .... [PASS]
+Hodnota P.lb.45_?1! byla úspěšně zadaná do pole password .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/dashboard.php ... [ PASS ]
+.=============================================
+Začíná test T09: Neplatné přihlášení uživatele
+=============================================
+Prohlížeč byl otevřen na požadované stránce .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Text zprávy: Login failed!
+.=============================================
+Začíná test T10: Přidání hesla - platná data.
+=============================================
+Prohlížeč byl otevřen na požadované stránce .... [PASS]
+Hodnota DonS byla úspěšně zadaná do pole user_name .... [PASS]
+Hodnota P.lb.45_?1! byla úspěšně zadaná do pole password .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/dashboard.php ... [ PASS ]
+Bylo kliknuto na Add password v menu dashboardu
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/add_service.php ... [ PASS ]
+Hodnota Facebook byla úspěšně zadaná do pole service_name .... [PASS]
+Hodnota DonS_F byla úspěšně zadaná do pole service_user_name .... [PASS]
+Hodnota 123456 byla úspěšně zadaná do pole service_user_password .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Text zprávy: Password successfully added!
+.=============================================
+Začíná test T11: Přidání hesla - s prázdnými poli
+=============================================
+Prohlížeč byl otevřen na požadované stránce .... [PASS]
+Hodnota DonS byla úspěšně zadaná do pole user_name .... [PASS]
+Hodnota P.lb.45_?1! byla úspěšně zadaná do pole password .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/dashboard.php ... [ PASS ]
+Bylo kliknuto na Add password v menu dashboardu
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/add_service.php ... [ PASS ]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Text zprávy: All fields are mandatory!
+.=============================================
+Začíná test T12: Přidání hesla - reset formuláře
+=============================================
+Prohlížeč byl otevřen na požadované stránce .... [PASS]
+Hodnota DonS byla úspěšně zadaná do pole user_name .... [PASS]
+Hodnota P.lb.45_?1! byla úspěšně zadaná do pole password .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/dashboard.php ... [ PASS ]
+Bylo kliknuto na Add password v menu dashboardu
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/add_service.php ... [ PASS ]
+Hodnota Facebook byla úspěšně zadaná do pole service_name .... [PASS]
+Hodnota DonS_F byla úspěšně zadaná do pole service_user_name .... [PASS]
+Hodnota 123456 byla úspěšně zadaná do pole service_user_password .... [PASS]
+Bylo stisknuto tlačítko pro vyresetovaní formuláře.
+Hodnoty ve formuláři byly smazané.... [PASS]
+.=============================================
+Začíná test T13: Editace hesla
+=============================================
+Prohlížeč byl otevřen na požadované stránce .... [PASS]
+Hodnota DonS byla úspěšně zadaná do pole user_name .... [PASS]
+Hodnota P.lb.45_?1! byla úspěšně zadaná do pole password .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/dashboard.php ... [ PASS ]
+Bylo kliknuto na Show all password v menu dashboardu
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/view_services.php ... [ PASS ]
+URL obsahuje 'edit_service.php' ... [PASS]
+Hodnota spartapraha byla úspěšně zadaná do pole updated_service_name .... [PASS]
+Hodnota DonSalieri byla úspěšně zadaná do pole updated_service_user_name .... [PASS]
+Hodnota mistrligy byla úspěšně zadaná do pole updated_service_user_password .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/view_services.php ... [ PASS ]
+Byly zkontrolovány nové upravené záznamy: spartapraha, DonSalieri, mistrligy
+.=============================================
+Začíná test T14: Editace hesla - s nevyplněnými povinnými poli.
+=============================================
+Prohlížeč byl otevřen na požadované stránce .... [PASS]
+Hodnota DonS byla úspěšně zadaná do pole user_name .... [PASS]
+Hodnota P.lb.45_?1! byla úspěšně zadaná do pole password .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/dashboard.php ... [ PASS ]
+Bylo kliknuto na Show all password v menu dashboardu
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/view_services.php ... [ PASS ]
+URL obsahuje 'edit_service.php' ... [PASS]
+Byla odstraněna hodnota z updated_service_name ... [PASS]
+Byla odstraněna hodnota z updated_service_user_name ... [PASS]
+Byla odstraněna hodnota z updated_service_user_password ... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Text zprávy: All rows are mandatory!
+.=============================================
+Začíná test T15: Editace hesla – Service Name není vyplněno..
+=============================================
+Prohlížeč byl otevřen na požadované stránce .... [PASS]
+Hodnota DonS byla úspěšně zadaná do pole user_name .... [PASS]
+Hodnota P.lb.45_?1! byla úspěšně zadaná do pole password .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/dashboard.php ... [ PASS ]
+Bylo kliknuto na Show all password v menu dashboardu
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/view_services.php ... [ PASS ]
+URL obsahuje 'edit_service.php' ... [PASS]
+Byla odstraněna hodnota z updated_service_name ... [PASS]
+Hodnota TestUser byla úspěšně zadaná do pole updated_service_user_name .... [PASS]
+Hodnota TestPassword byla úspěšně zadaná do pole updated_service_user_password .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Text zprávy: All rows are mandatory!
+.=============================================
+Začíná test T16: Editace hesla – Service user name není vyplněno..
+=============================================
+Prohlížeč byl otevřen na požadované stránce .... [PASS]
+Hodnota DonS byla úspěšně zadaná do pole user_name .... [PASS]
+Hodnota P.lb.45_?1! byla úspěšně zadaná do pole password .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/dashboard.php ... [ PASS ]
+Bylo kliknuto na Show all password v menu dashboardu
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/view_services.php ... [ PASS ]
+URL obsahuje 'edit_service.php' ... [PASS]
+Hodnota www.seznam.cz byla úspěšně zadaná do pole updated_service_name .... [PASS]
+Byla odstraněna hodnota z updated_service_user_name ... [PASS]
+Hodnota TestPassword byla úspěšně zadaná do pole updated_service_user_password .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Text zprávy: All rows are mandatory!
+.=============================================
+Začíná test T17: Editace hesla – Service user password není vyplněno..
+=============================================
+Prohlížeč byl otevřen na požadované stránce .... [PASS]
+Hodnota DonS byla úspěšně zadaná do pole user_name .... [PASS]
+Hodnota P.lb.45_?1! byla úspěšně zadaná do pole password .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/dashboard.php ... [ PASS ]
+Bylo kliknuto na Show all password v menu dashboardu
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/view_services.php ... [ PASS ]
+URL obsahuje 'edit_service.php' ... [PASS]
+Hodnota www.seznam.cz byla úspěšně zadaná do pole updated_service_name .... [PASS]
+Hodnota TestUser byla úspěšně zadaná do pole updated_service_user_name .... [PASS]
+Byla odstraněna hodnota z updated_service_user_password ... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Text zprávy: All rows are mandatory!
+.=============================================
+Začíná test T18: Odstranění hesla
+=============================================
+Prohlížeč byl otevřen na požadované stránce .... [PASS]
+Hodnota DonS byla úspěšně zadaná do pole user_name .... [PASS]
+Hodnota P.lb.45_?1! byla úspěšně zadaná do pole password .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/dashboard.php ... [ PASS ]
+Bylo kliknuto na Remove passwords v menu dashboardu
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/delete_service.php ... [ PASS ]
+Text zprávy:The service has been successfully removed.
+.=============================================
+Začíná test T19: Odhlášení
+=============================================
+Prohlížeč byl otevřen na požadované stránce .... [PASS]
+Hodnota DonS byla úspěšně zadaná do pole user_name .... [PASS]
+Hodnota P.lb.45_?1! byla úspěšně zadaná do pole password .... [PASS]
+Bylo stisknuto tlačítko pro odeslání formuláře.
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/dashboard.php ... [ PASS ]
+Bylo kliknuto na Logout v menu dashboardu
+Kontrola úspěšnosti přesměrování http://localhost/spravce/public/login.php ... [ PASS ]
+.
+----------------------------------------------------------------------
+Ran 19 tests in 195.295s
+
+OK
