@@ -1,11 +1,12 @@
 from BaseTest import BaseTest
 from selenium.webdriver.common.by import By
+import logging
 
 class TS12(BaseTest):
     def test_add_password_reset(self):
-        print("=============================================")
-        print("Začíná test T12: Přidání hesla - reset formuláře")
-        print("=============================================")
+        logging.info("=============================================")
+        logging.info("Test TS12:Add password - reset form")
+        logging.info("=============================================")
         self.openurl("http://localhost/spravce/public/login.php")
         self.fill_text("user_name","DonS")
         self.fill_text("password","P.lb.45_?1!")
@@ -23,11 +24,11 @@ class TS12(BaseTest):
         service_user_password=self.driver.find_element(By.NAME,"service_user_password").get_attribute('value')
         
         if service_name=='' and service_user_name=='' and service_user_password == '':
-            print ("Hodnoty ve formuláři byly smazané.... [PASS]")
+            logging.info("Values in the form have been deleted.... [PASS]")
         else:
-            print("Hodnoty smazané ve formuláři nebyly.... [FAIL]")
+            logging.error("The values in the form have not been deleted..... [FAIL]")
 
-
+        self.close_session()
         
         
 if __name__ == "__main__":

@@ -1,11 +1,12 @@
 from BaseTest import BaseTest
 from selenium.webdriver.common.by import By
+import logging
 
 class TS18(BaseTest):
     def test_remove_password(self):
-        print("=============================================")
-        print("Začíná test T18: Odstranění hesla")
-        print("=============================================")
+        logging.info("=============================================")
+        logging.info("Test T18: Password Removal begins")
+        logging.info("=============================================")
         self.openurl("http://localhost/spravce/public/login.php")
         self.fill_text("user_name","DonS")
         self.fill_text("password","P.lb.45_?1!")
@@ -14,7 +15,7 @@ class TS18(BaseTest):
         self.click_menu_link("Remove passwords")
         self.check_url("http://localhost/spravce/public/delete_service.php")
         self.remove("remove")
-      
+        self.close_session()
         
         
 if __name__ == "__main__":

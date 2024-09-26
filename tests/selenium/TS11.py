@@ -1,10 +1,11 @@
 from BaseTest import BaseTest
+import logging
 
 class TS11(BaseTest):
     def test_add_password(self):
-        print("=============================================")
-        print("Začíná test T11: Přidání hesla - s prázdnými poli ")
-        print("=============================================")
+        logging.info("=============================================")
+        logging.info("Test TS11: Adding a password - with empty fields")
+        logging.info("=============================================")
         self.openurl("http://localhost/spravce/public/login.php")
         self.fill_text("user_name","DonS")
         self.fill_text("password","P.lb.45_?1!")
@@ -13,7 +14,7 @@ class TS11(BaseTest):
         self.click_menu_link("Add password")
         self.check_url("http://localhost/spravce/public/add_service.php")
         self.click_button("input[type='submit']", "error")
-        
+        self.close_session()
         
         
         

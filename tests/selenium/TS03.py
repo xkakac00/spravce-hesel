@@ -1,11 +1,12 @@
 from BaseTest import BaseTest
 from selenium.webdriver.common.by import By
+import logging
 
 class TS03(BaseTest):
     def test_reset_button(self):
-        print("=============================================")
-        print("Začíná test TS03: Resetování formuláře.")
-        print("=============================================")
+        logging.info("=============================================")
+        logging.info("Test TS03 - Resseting the form")
+        logging.info("=============================================")
         self.openurl("http://localhost/spravce/public/register.php")
         self.fill_text("full_name", "DonSalieri")
         self.fill_text("user_name", "DonS")
@@ -17,11 +18,11 @@ class TS03(BaseTest):
         password=self.driver.find_element(By.NAME,"password").get_attribute('value')
         
         if fullname=='' and username=='' and password == '':
-            print ("Hodnoty ve formuláři byly smazané.... [PASS]")
+            logging.info("An values in the form have been deleted..... [PASS]")
         else:
-            print("Hodnoty smazané ve formuláři nebyly.... [FAIL]")
+            logging.error("An Values in the form have not been deleted.... [FAIL]")
 
-
+        self.close_session()
 if __name__ == "__main__":
     import unittest
     unittest.main()

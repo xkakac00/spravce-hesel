@@ -1,11 +1,12 @@
 from BaseTest import BaseTest
 from selenium.webdriver.common.by import By
+import logging
 
 class TS14(BaseTest):
     def test_edit_passwords_required_field(self):
-        print("=============================================")
-        print("Začíná test T14: Editace hesla - s nevyplněnými povinnými poli.")
-        print("=============================================")
+        logging.info("=============================================")
+        logging.info("Test TS14: Edit password - with required fields not filled in.")
+        logging.info("=============================================")
         self.openurl("http://localhost/spravce/public/login.php")
         self.fill_text("user_name","DonS")
         self.fill_text("password","P.lb.45_?1!")
@@ -19,7 +20,7 @@ class TS14(BaseTest):
         self.clear_text("updated_service_user_name")
         self.clear_text("updated_service_user_password")
         self.click_button("input[type='submit']", "error")
-        
+        self.close_session()
         
  
 

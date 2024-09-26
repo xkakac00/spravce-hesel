@@ -1,10 +1,11 @@
 from BaseTest import BaseTest
+import logging
 
 class TS10(BaseTest):
     def test_add_password(self):
-        print("=============================================")
-        print("Začíná test T10: Přidání hesla - platná data. ")
-        print("=============================================")
+        logging.info("=============================================")
+        logging.info("Test T10: Add password - valid data. ")
+        logging.info("=============================================")
         self.openurl("http://localhost/spravce/public/login.php")
         self.fill_text("user_name","DonS")
         self.fill_text("password","P.lb.45_?1!")
@@ -16,7 +17,7 @@ class TS10(BaseTest):
         self.fill_text("service_user_name","DonS_F")
         self.fill_text("service_user_password","123456")
         self.click_button("input[type='submit']", "success")
-        
+        self.close_session()
         
         
         

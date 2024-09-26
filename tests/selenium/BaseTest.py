@@ -2,50 +2,57 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException, WebDriverException
+from selenium.common.exceptions import NoSuchElementException, WebDriverException,TimeoutException
 import unittest
-import time
+import logging
+
+logging.basicConfig(filename="test_log.log",level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class BaseTest(unittest.TestCase):
 
+    # Temto test byl specificky pouze pro Firefox.
     def setUp(self):
         try:
             self.driver = webdriver.Firefox()
             self.driver.maximize_window()
+            #logging.info("Web driver initialization successful ... [PASS]")
         except WebDriverException as e:
-            print("Nastala chyba při inicializace Webdriveru")
-
+            logging.error(f"It was detected fail with initialization webdriver ... [FAIL] {str(e)}")
+            self.fail(f"I can not open browser... [FAIL] {str(e)}")
     def openurl(self, url):
-        self.driver.get(url)
-        current_url = self.driver.current_url
-        if current_url == url:
-            print("Prohlížeč byl otevřen na požadované stránce .... [PASS]")
-        else:
-            print("Prohlížeč nebyl otevřen na požadované stránce .... [FAIL]")
+        try:
+            self.driver.get(url)
+            current_url = self.driver.current_url
+            if current_url == url:
+                logging.info("The browser was opened on the requested page.... [PASS]")
+            else:
+                logging.error(f"The browser was not opened on the requested page .... [FAIL]")
+                self.fail(f"Expected URL:{url}, found URL:{current_url}")
+        except WebDriverException as e:
+            logging.error(f"Failure with initializing webdriver ... [FAIL] {str(e)}")
+            self.fail(f"Failed to open URL: {str(e)}")
 
     def fill_text(self, identifikator, text):
         try:
             element = self.driver.find_element(By.NAME, identifikator)
             element.clear()
             element.send_keys(text)
-            time.sleep(1)  # Přidání prodlevy, pro zajištění, že hodnota byla zadaná.
             value = element.get_attribute('value')
             if value == text:
-                print(f"Hodnota {text} byla úspěšně zadaná do pole {identifikator} .... [PASS]")
+                logging.info(f"The value {text} was successfully written to the  {identifikator} field .... [PASS]")
             else:
-                print(f"Hodnota {text} NEBYLA zadaná do pole {identifikator} .... [FAIL]")
-        except NoSuchElementException:
-            print(f"Prvek {identifikator} na stránce nebyl nalezen!")
+                logging.error(f"The value {text} WAS NOT written to the {identifikator} field .... [FAIL]")
+        except NoSuchElementException as e:
+            logging.error(f"The element {identifikator} was not found on the page !... [FAIL] {str(e)}")
 
-    
     def click_button(self, name_button, status):
         try:
             element = self.driver.find_element(By.CSS_SELECTOR, name_button)
             element.click()
             if name_button=="input[type='reset']":
-                print("Bylo stisknuto tlačítko pro vyresetovaní formuláře.")
+                logging.info("The button to reset the form has been pressed... [PASS]")
             elif name_button=="input[type='submit']":
-                print("Bylo stisknuto tlačítko pro odeslání formuláře.")
+                logging.info("The button to submit the form has been pressed... [PASS]")
             if status == "none":
                 pass
             else:
@@ -53,52 +60,55 @@ class BaseTest(unittest.TestCase):
                 EC.presence_of_element_located((By.CLASS_NAME, status))
                 )
                 if success_message.is_displayed():
-                    print("Text zprávy:", success_message.text)
+                    logging.info(f"Text message: {success_message.text}")
                 else:
-                    print("Požadovaná hláška není viditelná!")
+                    logging.error("The required message is not visible!")
         except NoSuchElementException:
-            print(f"Prvek {name_button} na stránce nebyl nalezen")
+            logging.error(f"Element {name_button} not found on the page.")
 
 
+    
     def check_url(self,expected_url=None):
         current_url=self.driver.current_url
         #print(current_url)
         if expected_url:
-            if current_url==expected_url:
-                print(f"Kontrola úspěšnosti přesměrování {expected_url} ... [ PASS ]")
-            else:
-                assert current_url==expected_url, f"Očekávaná URL {expected_url}, ale aktuální url je {current_url}"
+           if current_url == expected_url:
+             logging.info(f"Redirect success check {expected_url} ... [PASS]")
+           else:
+                logging.error(f"Expected URL: {expected_url}, but found URL: {current_url} ... [FAIL]")
+                self.fail(f"Expected URL: {expected_url}, but found URL: {current_url}")
         else:
-            print(f"Current url:{current_url}")
+            logging.error(f"Current url:{current_url}")
 
     def check_url_contains(self,url_substring):
         current_url=self.driver.current_url
-        assert url_substring in current_url, f"Očekávaná URL obsahující '{url_substring}', ale aktuální URL je '{url_substring}'"
-        print(f"URL obsahuje '{url_substring}' ... [PASS]")
+        assert url_substring in current_url, f"Expected URL containing '{url_substring}', but the actual URL is '{url_substring}'"
+        logging.info(f"URL contains '{url_substring}' ... [PASS]")
 
     def click_menu_link(self,link):
         try:
             link_element=self.driver.find_element(By.NAME,link)
             link_element.click()
-            print(f"Bylo kliknuto na {link} v menu dashboardu")
+            logging.info(f"The {link} in the dashboard menu was clicked... [PASS]")
         except NoSuchElementException:
-            print(f"Odkaz {link} v menu nebyl na stránce nalezen")
+            logging.error(f"The {link} in the menu was not found on the page ... [FAIL]")
 
     def edit(self,edit_name):
         try:
             element=self.driver.find_element(By.NAME,edit_name)
             element.click()
+            logging.info("I can click on the edit link ... [PASS]")
         except NoSuchElementException:
-            print(f"Nelze kliknout na edit link")
+            logging.error("Can't click on the edit link ... [FAIL]")
     
     def remove(self,remove_name):
         try:
             element=self.driver.find_element(By.NAME,remove_name)
             element.click()
             alert=self.driver.find_element(By.TAG_NAME,"p").text
-            print(f"Text zprávy:{alert}")
+            logging.info(f"Text message:{alert}")
         except NoSuchElementException:
-            print(f"Nelze kliknout na remove link")
+            logging.error(f"Can't click on the remove link ... [FAIL]")
     
     
 
@@ -112,15 +122,17 @@ class BaseTest(unittest.TestCase):
         assert service_user_name_element is not None, f"User name '{service_user_name}' not found"
         assert service_password_element is not None, f"Password '{service_password}' not found"
 
-        print(f"Byly zkontrolovány nové upravené záznamy: {service_name}, {service_user_name}, {service_password}")
+        logging.info(f"ew amended records have been checked:{service_name}, {service_user_name}, {service_password}")
     
     def clear_text(self,identifikator):
         try:
             element=self.driver.find_element(By.NAME,identifikator)
             element.clear()
-            print(f"Byla odstraněna hodnota z {identifikator} ... [PASS]")
+            logging.info(f"The value from {identifikator} ... [PASS]")
         except NoSuchElementException:
-            print(f"Prvek {element} nebyl na stránce nalezen ... [FAIL]")
+            logging.error(f"The element {identifikator} was not found on the page ... [FAIL]")
         
 
-    
+    def close_session(self):
+        self.driver.quit()
+        logging.info("Web driver successfully closed... [PASS]")
