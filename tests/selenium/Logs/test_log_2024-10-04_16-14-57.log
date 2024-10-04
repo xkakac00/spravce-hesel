@@ -1,0 +1,11 @@
+2024-10-04 16:14:58,265 - INFO - Web driver initialization successful ... [PASS]
+2024-10-04 16:14:58,265 - INFO - =============================================
+2024-10-04 16:14:58,266 - INFO - Test TS01:User registration to the system begins.
+2024-10-04 16:14:58,266 - INFO - =============================================
+2024-10-04 16:14:58,296 - INFO - The browser was opened on the requested page.... [PASS]
+2024-10-04 16:14:58,383 - INFO - The value DonSalieri was successfully written to the  full_name field .... [PASS]
+2024-10-04 16:14:58,429 - INFO - The value DonS was successfully written to the  user_name field .... [PASS]
+2024-10-04 16:14:58,504 - INFO - The value P.lb.45_?1! was successfully written to the  password field .... [PASS]
+2024-10-04 16:14:58,598 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:14:58,615 - INFO - Text message: The User has been successfully registered!
+2024-10-04 16:15:00,709 - INFO - Web driver successfully closed... [PASS]

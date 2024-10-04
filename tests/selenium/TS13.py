@@ -22,7 +22,7 @@ class TS13(BaseTest):
         self.click_button("input[type='submit']", "none")
         self.check_url("http://localhost/spravce/public/view_services.php")
         self.verify_changes("spartapraha","DonSalieri","mistrligy")
-        self.close_session()
+       
  
 
 

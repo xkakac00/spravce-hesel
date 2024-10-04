@@ -3,22 +3,54 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, WebDriverException,TimeoutException
+from datetime import datetime
 import unittest
 import logging
+import argparse
 
-logging.basicConfig(filename="test_log.log",level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+actual_time=datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+logging.basicConfig(filename=f"Logs/test_log_{actual_time}.log",level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class BaseTest(unittest.TestCase):
 
-    # Temto test byl specificky pouze pro Firefox.
+    # Class Attributes
+    MAX_RETRIES=3
+   
     def setUp(self):
-        try:
-            self.driver = webdriver.Firefox()
-            self.driver.maximize_window()
-            #logging.info("Web driver initialization successful ... [PASS]")
-        except WebDriverException as e:
-            logging.error(f"It was detected fail with initialization webdriver ... [FAIL] {str(e)}")
-            self.fail(f"I can not open browser... [FAIL] {str(e)}")
+        parser = argparse.ArgumentParser(description="Choose browser type")
+        parser.add_argument('--typ_browser',type=str,help="Broser type:Firefox, Chrome,Edge",default="Firefox")
+        args, unknown = parser.parse_known_args()
+        self.browser=args.typ_browser
+
+        attempt = 0
+
+        while attempt < self.MAX_RETRIES:
+          try:
+              if self.browser == "Firefox":
+                  self.driver = webdriver.Firefox()
+                  self.driver.maximize_window()
+                  logging.info("Web driver - Firefox - initialization successful ... [PASS]")
+                  break
+              elif self.browser == "Chrome":
+                  self.driver = webdriver.Chrome()
+                  self.driver.maximize_window()
+                  logging.info("Web driver - Chrome - initialization successful ... [PASS]")
+                  break
+              elif self.browser == "Edge":
+                  self.driver = webdriver.Edge()
+                  self.driver.maximize_window()
+                  logging.info("Web driver - Edge - initialization successful ... [PASS]")
+                  break
+              else:
+                  logging.error("We dont support this browser ... [FAIL]")
+          except WebDriverException as e:
+              logging.error(f"It was detected fail with initialization webdriver ... [FAIL] {str(e)}")
+              attempt = attempt + 1
+
+              if attempt == self.MAX_RETRIES:
+                  self.fail("Browser initialization failed after 3 attempts")
+          
     def openurl(self, url):
         try:
             self.driver.get(url)
@@ -133,6 +165,7 @@ class BaseTest(unittest.TestCase):
             logging.error(f"The element {identifikator} was not found on the page ... [FAIL]")
         
 
-    def close_session(self):
-        self.driver.quit()
-        logging.info("Web driver successfully closed... [PASS]")
+    def tearDown(self):
+        if hasattr(self,'driver'):
+            self.driver.quit()
+            logging.info("Web driver successfully closed... [PASS]")

@@ -17,7 +17,7 @@ class TS10(BaseTest):
         self.fill_text("service_user_name","DonS_F")
         self.fill_text("service_user_password","123456")
         self.click_button("input[type='submit']", "success")
-        self.close_session()
+        
         
         
         

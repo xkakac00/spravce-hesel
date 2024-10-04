@@ -22,7 +22,7 @@ class TS03(BaseTest):
         else:
             logging.error("An Values in the form have not been deleted.... [FAIL]")
 
-        self.close_session()
+       
 if __name__ == "__main__":
     import unittest
     unittest.main()

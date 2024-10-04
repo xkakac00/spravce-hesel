@@ -28,8 +28,7 @@ class TS12(BaseTest):
         else:
             logging.error("The values in the form have not been deleted..... [FAIL]")
 
-        self.close_session()
-        
+    
         
 if __name__ == "__main__":
     import unittest

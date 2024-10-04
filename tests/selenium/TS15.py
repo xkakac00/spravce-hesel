@@ -20,7 +20,7 @@ class TS15(BaseTest):
         self.fill_text("updated_service_user_name","TestUser")
         self.fill_text("updated_service_user_password","TestPassword")
         self.click_button("input[type='submit']", "error")
-        self.close_session()
+        
         
 if __name__ == "__main__":
     import unittest

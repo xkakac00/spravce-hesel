@@ -9,7 +9,7 @@ class TS06(BaseTest):
         self.openurl("http://localhost/spravce/public/register.php")
         self.fill_text("user_name","DonS")
         self.click_button("input[type='submit']", "error")
-        self.close_session()
+        
 
 if __name__ == "__main__":
     import unittest

@@ -14,7 +14,7 @@ class TS19(BaseTest):
         self.check_url("http://localhost/spravce/public/dashboard.php")
         self.click_menu_link("Logout")
         self.check_url("http://localhost/spravce/public/login.php")
-        self.close_session()
+        
       
         
         

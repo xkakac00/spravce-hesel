@@ -15,7 +15,6 @@ class TS18(BaseTest):
         self.click_menu_link("Remove passwords")
         self.check_url("http://localhost/spravce/public/delete_service.php")
         self.remove("remove")
-        self.close_session()
         
         
 if __name__ == "__main__":

@@ -8,7 +8,7 @@ class TS04(BaseTest):
         logging.info("=============================================")
         self.openurl("http://localhost/spravce/public/register.php")
         self.click_button("input[type='submit']", "error")
-        self.close_session()
+        
 
 if __name__ == "__main__":
     import unittest

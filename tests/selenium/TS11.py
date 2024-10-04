@@ -14,7 +14,7 @@ class TS11(BaseTest):
         self.click_menu_link("Add password")
         self.check_url("http://localhost/spravce/public/add_service.php")
         self.click_button("input[type='submit']", "error")
-        self.close_session()
+        
         
         
         

@@ -11,7 +11,7 @@ class TS08(BaseTest):
         self.fill_text("password","P.lb.45_?1!")
         self.click_button("input[type='submit']", "none")
         self.check_url("http://localhost/spravce/public/dashboard.php")
-        self.close_session()
+        
 if __name__ == "__main__":
     import unittest
     unittest.main()

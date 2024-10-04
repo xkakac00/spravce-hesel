@@ -1,0 +1,255 @@
+2024-10-04 16:16:16,002 - INFO - Web driver - Chrome - initialization successful ... [PASS]
+2024-10-04 16:16:16,002 - INFO - =============================================
+2024-10-04 16:16:16,002 - INFO - Test TS01:User registration to the system begins.
+2024-10-04 16:16:16,002 - INFO - =============================================
+2024-10-04 16:16:16,040 - INFO - The browser was opened on the requested page.... [PASS]
+2024-10-04 16:16:16,119 - INFO - The value DonSalieri was successfully written to the  full_name field .... [PASS]
+2024-10-04 16:16:16,181 - INFO - The value DonS was successfully written to the  user_name field .... [PASS]
+2024-10-04 16:16:16,242 - INFO - The value P.lb.45_?1! was successfully written to the  password field .... [PASS]
+2024-10-04 16:16:16,350 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:16:16,367 - INFO - Text message: The User has been successfully registered!
+2024-10-04 16:16:18,446 - INFO - Web driver successfully closed... [PASS]
+2024-10-04 16:16:23,701 - INFO - Web driver - Chrome - initialization successful ... [PASS]
+2024-10-04 16:16:23,701 - INFO - =============================================
+2024-10-04 16:16:23,701 - INFO - Test TS02: Registering an existing user to the system begins
+2024-10-04 16:16:23,701 - INFO - =============================================
+2024-10-04 16:16:23,756 - INFO - The browser was opened on the requested page.... [PASS]
+2024-10-04 16:16:23,837 - INFO - The value DonSalieri was successfully written to the  full_name field .... [PASS]
+2024-10-04 16:16:23,899 - INFO - The value DonS was successfully written to the  user_name field .... [PASS]
+2024-10-04 16:16:23,959 - INFO - The value P.lb.45_?1! was successfully written to the  password field .... [PASS]
+2024-10-04 16:16:24,002 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:16:24,021 - INFO - Text message: The user with this name already exists.
+2024-10-04 16:16:26,103 - INFO - Web driver successfully closed... [PASS]
+2024-10-04 16:16:31,349 - INFO - Web driver - Chrome - initialization successful ... [PASS]
+2024-10-04 16:16:31,349 - INFO - =============================================
+2024-10-04 16:16:31,349 - INFO - Test TS03 - Resseting the form
+2024-10-04 16:16:31,349 - INFO - =============================================
+2024-10-04 16:16:31,387 - INFO - The browser was opened on the requested page.... [PASS]
+2024-10-04 16:16:31,475 - INFO - The value DonSalieri was successfully written to the  full_name field .... [PASS]
+2024-10-04 16:16:31,532 - INFO - The value DonS was successfully written to the  user_name field .... [PASS]
+2024-10-04 16:16:31,599 - INFO - The value P.lb.45_?1! was successfully written to the  password field .... [PASS]
+2024-10-04 16:16:31,635 - INFO - The button to reset the form has been pressed... [PASS]
+2024-10-04 16:16:31,648 - INFO - An values in the form have been deleted..... [PASS]
+2024-10-04 16:16:33,697 - INFO - Web driver successfully closed... [PASS]
+2024-10-04 16:16:38,985 - INFO - Web driver - Chrome - initialization successful ... [PASS]
+2024-10-04 16:16:38,985 - INFO - =============================================
+2024-10-04 16:16:38,985 - INFO - Test TS04: Validation of mandatory form fields begins. 
+2024-10-04 16:16:38,985 - INFO - =============================================
+2024-10-04 16:16:39,020 - INFO - The browser was opened on the requested page.... [PASS]
+2024-10-04 16:16:39,063 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:16:39,078 - INFO - Text message: All fields are required!
+2024-10-04 16:16:41,178 - INFO - Web driver successfully closed... [PASS]
+2024-10-04 16:16:46,436 - INFO - Web driver - Chrome - initialization successful ... [PASS]
+2024-10-04 16:16:46,436 - INFO - =============================================
+2024-10-04 16:16:46,436 - INFO - Test TS05: Validation of required fields in the form - only FullName is filled in 
+2024-10-04 16:16:46,436 - INFO - =============================================
+2024-10-04 16:16:46,488 - INFO - The browser was opened on the requested page.... [PASS]
+2024-10-04 16:16:46,573 - INFO - The value Don Salieri was successfully written to the  full_name field .... [PASS]
+2024-10-04 16:16:46,641 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:16:46,651 - INFO - Text message: All fields are required!
+2024-10-04 16:16:48,736 - INFO - Web driver successfully closed... [PASS]
+2024-10-04 16:16:53,999 - INFO - Web driver - Chrome - initialization successful ... [PASS]
+2024-10-04 16:16:53,999 - INFO - =============================================
+2024-10-04 16:16:53,999 - INFO - Test TS06:Validation of mandatory form fields - only UserName is filled in 
+2024-10-04 16:16:53,999 - INFO - =============================================
+2024-10-04 16:16:54,040 - INFO - The browser was opened on the requested page.... [PASS]
+2024-10-04 16:16:54,112 - INFO - The value DonS was successfully written to the  user_name field .... [PASS]
+2024-10-04 16:16:54,153 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:16:54,168 - INFO - Text message: All fields are required!
+2024-10-04 16:16:56,264 - INFO - Web driver successfully closed... [PASS]
+2024-10-04 16:17:01,602 - INFO - Web driver - Chrome - initialization successful ... [PASS]
+2024-10-04 16:17:01,603 - INFO - =============================================
+2024-10-04 16:17:01,603 - INFO - Test TS07: Validation of required fields in the form - only Password is filled in 
+2024-10-04 16:17:01,603 - INFO - =============================================
+2024-10-04 16:17:01,641 - INFO - The browser was opened on the requested page.... [PASS]
+2024-10-04 16:17:01,719 - INFO - The value P.lb.45_?1! was successfully written to the  password field .... [PASS]
+2024-10-04 16:17:01,769 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:17:01,790 - INFO - Text message: All fields are required!
+2024-10-04 16:17:03,882 - INFO - Web driver successfully closed... [PASS]
+2024-10-04 16:17:09,169 - INFO - Web driver - Chrome - initialization successful ... [PASS]
+2024-10-04 16:17:09,169 - INFO - =============================================
+2024-10-04 16:17:09,169 - INFO - Test TS08: User Login begins.
+2024-10-04 16:17:09,169 - INFO - =============================================
+2024-10-04 16:17:09,246 - INFO - The browser was opened on the requested page.... [PASS]
+2024-10-04 16:17:09,313 - INFO - The value DonS was successfully written to the  user_name field .... [PASS]
+2024-10-04 16:17:09,394 - INFO - The value P.lb.45_?1! was successfully written to the  password field .... [PASS]
+2024-10-04 16:17:09,532 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:17:09,536 - INFO - Redirect success check http://localhost/spravce/public/dashboard.php ... [PASS]
+2024-10-04 16:17:11,614 - INFO - Web driver successfully closed... [PASS]
+2024-10-04 16:17:17,020 - INFO - Web driver - Chrome - initialization successful ... [PASS]
+2024-10-04 16:17:17,020 - INFO - =============================================
+2024-10-04 16:17:17,020 - INFO - Test T09: Invalid user login begins 
+2024-10-04 16:17:17,020 - INFO - =============================================
+2024-10-04 16:17:17,058 - INFO - The browser was opened on the requested page.... [PASS]
+2024-10-04 16:17:17,114 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:17:17,129 - INFO - Text message: Login failed!
+2024-10-04 16:17:19,247 - INFO - Web driver successfully closed... [PASS]
+2024-10-04 16:17:24,618 - INFO - Web driver - Chrome - initialization successful ... [PASS]
+2024-10-04 16:17:24,618 - INFO - =============================================
+2024-10-04 16:17:24,619 - INFO - Test T10: Add password - valid data. 
+2024-10-04 16:17:24,619 - INFO - =============================================
+2024-10-04 16:17:24,652 - INFO - The browser was opened on the requested page.... [PASS]
+2024-10-04 16:17:24,729 - INFO - The value DonS was successfully written to the  user_name field .... [PASS]
+2024-10-04 16:17:24,801 - INFO - The value P.lb.45_?1! was successfully written to the  password field .... [PASS]
+2024-10-04 16:17:24,920 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:17:24,920 - INFO - Redirect success check http://localhost/spravce/public/dashboard.php ... [PASS]
+2024-10-04 16:17:24,995 - INFO - The Add password in the dashboard menu was clicked... [PASS]
+2024-10-04 16:17:24,997 - INFO - Redirect success check http://localhost/spravce/public/add_service.php ... [PASS]
+2024-10-04 16:17:25,058 - INFO - The value Facebook was successfully written to the  service_name field .... [PASS]
+2024-10-04 16:17:25,104 - INFO - The value DonS_F was successfully written to the  service_user_name field .... [PASS]
+2024-10-04 16:17:25,167 - INFO - The value 123456 was successfully written to the  service_user_password field .... [PASS]
+2024-10-04 16:17:25,199 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:17:25,217 - INFO - Text message: Password successfully added!
+2024-10-04 16:17:27,303 - INFO - Web driver successfully closed... [PASS]
+2024-10-04 16:17:32,552 - INFO - Web driver - Chrome - initialization successful ... [PASS]
+2024-10-04 16:17:32,552 - INFO - =============================================
+2024-10-04 16:17:32,552 - INFO - Test TS11: Adding a password - with empty fields
+2024-10-04 16:17:32,552 - INFO - =============================================
+2024-10-04 16:17:32,590 - INFO - The browser was opened on the requested page.... [PASS]
+2024-10-04 16:17:32,646 - INFO - The value DonS was successfully written to the  user_name field .... [PASS]
+2024-10-04 16:17:32,734 - INFO - The value P.lb.45_?1! was successfully written to the  password field .... [PASS]
+2024-10-04 16:17:32,834 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:17:32,834 - INFO - Redirect success check http://localhost/spravce/public/dashboard.php ... [PASS]
+2024-10-04 16:17:32,908 - INFO - The Add password in the dashboard menu was clicked... [PASS]
+2024-10-04 16:17:32,911 - INFO - Redirect success check http://localhost/spravce/public/add_service.php ... [PASS]
+2024-10-04 16:17:32,976 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:17:32,985 - INFO - Text message: All fields are mandatory!
+2024-10-04 16:17:35,054 - INFO - Web driver successfully closed... [PASS]
+2024-10-04 16:17:40,336 - INFO - Web driver - Chrome - initialization successful ... [PASS]
+2024-10-04 16:17:40,337 - INFO - =============================================
+2024-10-04 16:17:40,337 - INFO - Test TS12:Add password - reset form
+2024-10-04 16:17:40,337 - INFO - =============================================
+2024-10-04 16:17:40,389 - INFO - The browser was opened on the requested page.... [PASS]
+2024-10-04 16:17:40,449 - INFO - The value DonS was successfully written to the  user_name field .... [PASS]
+2024-10-04 16:17:40,534 - INFO - The value P.lb.45_?1! was successfully written to the  password field .... [PASS]
+2024-10-04 16:17:40,670 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:17:40,670 - INFO - Redirect success check http://localhost/spravce/public/dashboard.php ... [PASS]
+2024-10-04 16:17:40,714 - INFO - The Add password in the dashboard menu was clicked... [PASS]
+2024-10-04 16:17:40,720 - INFO - Redirect success check http://localhost/spravce/public/add_service.php ... [PASS]
+2024-10-04 16:17:40,784 - INFO - The value Facebook was successfully written to the  service_name field .... [PASS]
+2024-10-04 16:17:40,840 - INFO - The value DonS_F was successfully written to the  service_user_name field .... [PASS]
+2024-10-04 16:17:40,900 - INFO - The value 123456 was successfully written to the  service_user_password field .... [PASS]
+2024-10-04 16:17:40,926 - INFO - The button to reset the form has been pressed... [PASS]
+2024-10-04 16:17:40,934 - INFO - Values in the form have been deleted.... [PASS]
+2024-10-04 16:17:43,034 - INFO - Web driver successfully closed... [PASS]
+2024-10-04 16:17:48,302 - INFO - Web driver - Chrome - initialization successful ... [PASS]
+2024-10-04 16:17:48,302 - INFO - =============================================
+2024-10-04 16:17:48,302 - INFO - Test TS13: Edit password
+2024-10-04 16:17:48,302 - INFO - =============================================
+2024-10-04 16:17:48,340 - INFO - The browser was opened on the requested page.... [PASS]
+2024-10-04 16:17:48,412 - INFO - The value DonS was successfully written to the  user_name field .... [PASS]
+2024-10-04 16:17:48,484 - INFO - The value P.lb.45_?1! was successfully written to the  password field .... [PASS]
+2024-10-04 16:17:48,578 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:17:48,588 - INFO - Redirect success check http://localhost/spravce/public/dashboard.php ... [PASS]
+2024-10-04 16:17:48,670 - INFO - The Show all password in the dashboard menu was clicked... [PASS]
+2024-10-04 16:17:48,670 - INFO - Redirect success check http://localhost/spravce/public/view_services.php ... [PASS]
+2024-10-04 16:17:48,754 - INFO - I can click on the edit link ... [PASS]
+2024-10-04 16:17:48,754 - INFO - URL contains 'edit_service.php' ... [PASS]
+2024-10-04 16:17:48,826 - INFO - The value spartapraha was successfully written to the  updated_service_name field .... [PASS]
+2024-10-04 16:17:48,894 - INFO - The value DonSalieri was successfully written to the  updated_service_user_name field .... [PASS]
+2024-10-04 16:17:48,958 - INFO - The value mistrligy was successfully written to the  updated_service_user_password field .... [PASS]
+2024-10-04 16:17:50,028 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:17:50,032 - INFO - Redirect success check http://localhost/spravce/public/view_services.php ... [PASS]
+2024-10-04 16:17:50,053 - INFO - ew amended records have been checked:spartapraha, DonSalieri, mistrligy
+2024-10-04 16:17:52,133 - INFO - Web driver successfully closed... [PASS]
+2024-10-04 16:17:57,436 - INFO - Web driver - Chrome - initialization successful ... [PASS]
+2024-10-04 16:17:57,436 - INFO - =============================================
+2024-10-04 16:17:57,436 - INFO - Test TS14: Edit password - with required fields not filled in.
+2024-10-04 16:17:57,436 - INFO - =============================================
+2024-10-04 16:17:57,490 - INFO - The browser was opened on the requested page.... [PASS]
+2024-10-04 16:17:57,563 - INFO - The value DonS was successfully written to the  user_name field .... [PASS]
+2024-10-04 16:17:57,638 - INFO - The value P.lb.45_?1! was successfully written to the  password field .... [PASS]
+2024-10-04 16:17:57,753 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:17:57,753 - INFO - Redirect success check http://localhost/spravce/public/dashboard.php ... [PASS]
+2024-10-04 16:17:57,811 - INFO - The Show all password in the dashboard menu was clicked... [PASS]
+2024-10-04 16:17:57,814 - INFO - Redirect success check http://localhost/spravce/public/view_services.php ... [PASS]
+2024-10-04 16:17:57,877 - INFO - I can click on the edit link ... [PASS]
+2024-10-04 16:17:57,880 - INFO - URL contains 'edit_service.php' ... [PASS]
+2024-10-04 16:17:57,903 - INFO - The value from updated_service_name ... [PASS]
+2024-10-04 16:17:57,918 - INFO - The value from updated_service_user_name ... [PASS]
+2024-10-04 16:17:57,934 - INFO - The value from updated_service_user_password ... [PASS]
+2024-10-04 16:17:57,990 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:17:58,002 - INFO - Text message: All rows are mandatory!
+2024-10-04 16:18:00,090 - INFO - Web driver successfully closed... [PASS]
+2024-10-04 16:18:05,352 - INFO - Web driver - Chrome - initialization successful ... [PASS]
+2024-10-04 16:18:05,352 - INFO - =============================================
+2024-10-04 16:18:05,352 - INFO - Test TS15: Edit password - Service Name is not filled..
+2024-10-04 16:18:05,352 - INFO - =============================================
+2024-10-04 16:18:05,390 - INFO - The browser was opened on the requested page.... [PASS]
+2024-10-04 16:18:05,447 - INFO - The value DonS was successfully written to the  user_name field .... [PASS]
+2024-10-04 16:18:05,517 - INFO - The value P.lb.45_?1! was successfully written to the  password field .... [PASS]
+2024-10-04 16:18:05,625 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:18:05,627 - INFO - Redirect success check http://localhost/spravce/public/dashboard.php ... [PASS]
+2024-10-04 16:18:05,673 - INFO - The Show all password in the dashboard menu was clicked... [PASS]
+2024-10-04 16:18:05,675 - INFO - Redirect success check http://localhost/spravce/public/view_services.php ... [PASS]
+2024-10-04 16:18:05,742 - INFO - I can click on the edit link ... [PASS]
+2024-10-04 16:18:05,744 - INFO - URL contains 'edit_service.php' ... [PASS]
+2024-10-04 16:18:05,768 - INFO - The value from updated_service_name ... [PASS]
+2024-10-04 16:18:05,823 - INFO - The value TestUser was successfully written to the  updated_service_user_name field .... [PASS]
+2024-10-04 16:18:05,885 - INFO - The value TestPassword was successfully written to the  updated_service_user_password field .... [PASS]
+2024-10-04 16:18:05,923 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:18:05,937 - INFO - Text message: All rows are mandatory!
+2024-10-04 16:18:08,021 - INFO - Web driver successfully closed... [PASS]
+2024-10-04 16:18:13,286 - INFO - Web driver - Chrome - initialization successful ... [PASS]
+2024-10-04 16:18:13,286 - INFO - =============================================
+2024-10-04 16:18:13,286 - INFO - Test T16: Edit password - Service user name is not filled in..
+2024-10-04 16:18:13,286 - INFO - =============================================
+2024-10-04 16:18:13,340 - INFO - The browser was opened on the requested page.... [PASS]
+2024-10-04 16:18:13,413 - INFO - The value DonS was successfully written to the  user_name field .... [PASS]
+2024-10-04 16:18:13,484 - INFO - The value P.lb.45_?1! was successfully written to the  password field .... [PASS]
+2024-10-04 16:18:13,604 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:18:13,604 - INFO - Redirect success check http://localhost/spravce/public/dashboard.php ... [PASS]
+2024-10-04 16:18:13,664 - INFO - The Show all password in the dashboard menu was clicked... [PASS]
+2024-10-04 16:18:13,667 - INFO - Redirect success check http://localhost/spravce/public/view_services.php ... [PASS]
+2024-10-04 16:18:13,712 - INFO - I can click on the edit link ... [PASS]
+2024-10-04 16:18:13,714 - INFO - URL contains 'edit_service.php' ... [PASS]
+2024-10-04 16:18:13,788 - INFO - The value www.seznam.cz was successfully written to the  updated_service_name field .... [PASS]
+2024-10-04 16:18:13,810 - INFO - The value from updated_service_user_name ... [PASS]
+2024-10-04 16:18:13,868 - INFO - The value TestPassword was successfully written to the  updated_service_user_password field .... [PASS]
+2024-10-04 16:18:13,908 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:18:13,920 - INFO - Text message: All rows are mandatory!
+2024-10-04 16:18:16,003 - INFO - Web driver successfully closed... [PASS]
+2024-10-04 16:18:21,235 - INFO - Web driver - Chrome - initialization successful ... [PASS]
+2024-10-04 16:18:21,237 - INFO - =============================================
+2024-10-04 16:18:21,237 - INFO - Test T17: Edit password - Service user password is not filled in..
+2024-10-04 16:18:21,237 - INFO - =============================================
+2024-10-04 16:18:21,273 - INFO - The browser was opened on the requested page.... [PASS]
+2024-10-04 16:18:21,335 - INFO - The value DonS was successfully written to the  user_name field .... [PASS]
+2024-10-04 16:18:21,418 - INFO - The value P.lb.45_?1! was successfully written to the  password field .... [PASS]
+2024-10-04 16:18:21,518 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:18:21,533 - INFO - Redirect success check http://localhost/spravce/public/dashboard.php ... [PASS]
+2024-10-04 16:18:21,594 - INFO - The Show all password in the dashboard menu was clicked... [PASS]
+2024-10-04 16:18:21,597 - INFO - Redirect success check http://localhost/spravce/public/view_services.php ... [PASS]
+2024-10-04 16:18:21,643 - INFO - I can click on the edit link ... [PASS]
+2024-10-04 16:18:21,646 - INFO - URL contains 'edit_service.php' ... [PASS]
+2024-10-04 16:18:21,721 - INFO - The value www.seznam.cz was successfully written to the  updated_service_name field .... [PASS]
+2024-10-04 16:18:21,785 - INFO - The value TestUser was successfully written to the  updated_service_user_name field .... [PASS]
+2024-10-04 16:18:21,808 - INFO - The value from updated_service_user_password ... [PASS]
+2024-10-04 16:18:21,839 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:18:21,852 - INFO - Text message: All rows are mandatory!
+2024-10-04 16:18:23,936 - INFO - Web driver successfully closed... [PASS]
+2024-10-04 16:18:29,242 - INFO - Web driver - Chrome - initialization successful ... [PASS]
+2024-10-04 16:18:29,242 - INFO - =============================================
+2024-10-04 16:18:29,242 - INFO - Test T18: Password Removal begins
+2024-10-04 16:18:29,242 - INFO - =============================================
+2024-10-04 16:18:29,292 - INFO - The browser was opened on the requested page.... [PASS]
+2024-10-04 16:18:29,370 - INFO - The value DonS was successfully written to the  user_name field .... [PASS]
+2024-10-04 16:18:29,452 - INFO - The value P.lb.45_?1! was successfully written to the  password field .... [PASS]
+2024-10-04 16:18:29,551 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:18:29,557 - INFO - Redirect success check http://localhost/spravce/public/dashboard.php ... [PASS]
+2024-10-04 16:18:29,643 - INFO - The Remove passwords in the dashboard menu was clicked... [PASS]
+2024-10-04 16:18:29,645 - INFO - Redirect success check http://localhost/spravce/public/delete_service.php ... [PASS]
+2024-10-04 16:18:29,721 - INFO - Text message:The service has been successfully removed.
+2024-10-04 16:18:31,801 - INFO - Web driver successfully closed... [PASS]
+2024-10-04 16:18:37,152 - INFO - Web driver - Chrome - initialization successful ... [PASS]
+2024-10-04 16:18:37,153 - INFO - =============================================
+2024-10-04 16:18:37,153 - INFO - Test T19: Logout begins
+2024-10-04 16:18:37,153 - INFO - =============================================
+2024-10-04 16:18:37,190 - INFO - The browser was opened on the requested page.... [PASS]
+2024-10-04 16:18:37,248 - INFO - The value DonS was successfully written to the  user_name field .... [PASS]
+2024-10-04 16:18:37,318 - INFO - The value P.lb.45_?1! was successfully written to the  password field .... [PASS]
+2024-10-04 16:18:37,436 - INFO - The button to submit the form has been pressed... [PASS]
+2024-10-04 16:18:37,440 - INFO - Redirect success check http://localhost/spravce/public/dashboard.php ... [PASS]
+2024-10-04 16:18:37,509 - INFO - The Logout in the dashboard menu was clicked... [PASS]
+2024-10-04 16:18:37,511 - INFO - Redirect success check http://localhost/spravce/public/login.php ... [PASS]
+2024-10-04 16:18:39,583 - INFO - Web driver successfully closed... [PASS]

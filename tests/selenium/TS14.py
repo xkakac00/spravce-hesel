@@ -20,9 +20,7 @@ class TS14(BaseTest):
         self.clear_text("updated_service_user_name")
         self.clear_text("updated_service_user_password")
         self.click_button("input[type='submit']", "error")
-        self.close_session()
         
- 
 
 
         
